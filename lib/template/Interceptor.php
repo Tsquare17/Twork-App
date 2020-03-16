@@ -4,27 +4,32 @@ namespace Twork\Template;
 
 class Interceptor
 {
-    protected $templateToOverride;
-    protected $overrideTemplate;
+    protected $template;
+    protected $controller;
     protected $blade;
     protected $data;
     protected $scripts;
     protected $styles;
 
-    public function __construct($templateToOverride, $overrideTemplate, $blade, $data)
+    public function __construct($template, $controller)
     {
-        $this->templateToOverride = $templateToOverride;
-        $this->overrideTemplate = $overrideTemplate;
-        $this->blade = $blade;
-        $this->data = $data;
+        $this->template = $template;
+        $this->controller = $controller;
     }
 
     public function templateInterceptor($template)
     {
-        if ($template === TWORK_PATH . '/' . $this->templateToOverride) {
+        if ($template === TWORK_PATH . '/' . $this->template) {
+            $controller = new $this->controller();
+
+            $controller->processScripts();
+            $this->registerScripts($controller->footerScripts());
+            $this->registerScripts($controller->headerScripts());
+            $this->registerStyles($controller->styles());
+
             add_action('wp_enqueue_scripts', [$this, 'enqueueAssets']);
 
-            echo $this->blade->render($this->overrideTemplate, $this->data);
+            $controller->render();
             return;
         }
 

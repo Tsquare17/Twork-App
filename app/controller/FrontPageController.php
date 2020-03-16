@@ -6,9 +6,11 @@ use Twork\Theme;
 
 class FrontPageController extends Theme
 {
+    protected $template;
+
     public function __construct()
     {
-        $this->registerTemplate('front-page', 'homepage');
+        $this->template = 'homepage';
     }
 
     public function data()

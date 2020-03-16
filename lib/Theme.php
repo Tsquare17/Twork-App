@@ -27,44 +27,39 @@ class Theme
     public $styles = [];
 
     /**
+     * @var string Name of the blade template.
+     */
+    protected $template;
+
+    /**
      * Theme constructor.
      *
-     * Collect controller files and instantiate, registering blade templates.
+     * Loop over template-controller map, registering blade templates.
      */
     public function __construct()
     {
-        $controllerPath = TWORK_PATH . '/app/controller';
+        $config = require TWORK_PATH . '/config/config.php';
 
-        $files = array_diff(scandir($controllerPath), ['.', '..']);
-
-        foreach ($files as $file) {
-            $controller = 'Twork\\App\\Controller\\' . str_replace('.php', '', $file);
-            new $controller;
+        foreach ($config['templates'] as $template => $controller) {
+            $this->registerTemplate($template, $controller);
         }
     }
 
     /**
      * Override WordPress template includes.
      *
-     * @param $templateToOverride
-     * @param $overrideTemplate
+     * @param $template
+     * @param $controller
      */
-    public function registerTemplate($templateToOverride, $overrideTemplate)
+    public function registerTemplate($template, $controller)
     {
-        $blade = self::getBlade();
-
-        $data = $this->data();
-
-        if (strpos(strrev($templateToOverride), 'php.') !== 0) {
-            $templateToOverride .= '.php';
+        if (strpos(strrev($template), 'php.') !== 0) {
+            $template .= '.php';
         }
 
         $this->processScripts();
 
-        $interceptor = new Interceptor($templateToOverride, $overrideTemplate, $blade, $data);
-        $interceptor->registerScripts($this->footerScripts);
-        $interceptor->registerScripts($this->headerScripts);
-        $interceptor->registerStyles($this->styles());
+        $interceptor = new Interceptor($template, $controller);
 
         add_filter('template_include', [$interceptor, 'templateInterceptor']);
     }
@@ -112,7 +107,7 @@ class Theme
     /**
      * Process the scripts specified for the template.
      */
-    protected function processScripts()
+    public function processScripts()
     {
         $processedFooterScripts = [];
         foreach ($this->footerScripts() as $handle => $script) {
@@ -172,5 +167,13 @@ class Theme
     protected function style($path, array $dependencies = null)
     {
         return ['path' => TWORK_CSS_URL . $path, 'dependencies' => $dependencies, 'version' => TWORK_VERSION];
+    }
+
+    /**
+     * Render Blade template.
+     */
+    public function render()
+    {
+        echo self::getBlade()->render($this->template, $this->data());
     }
 }
