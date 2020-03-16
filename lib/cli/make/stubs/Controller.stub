@@ -1,0 +1,18 @@
+<?php
+
+namespace Twork\App\Controller;
+
+use Twork\Theme;
+
+class $:$ extends Theme
+{
+    public function __construct()
+    {
+        $this->registerTemplate('$:-:$', '$:-:$');
+    }
+
+    public function data()
+    {
+        return [];
+    }
+}
