@@ -2,14 +2,23 @@
 
 namespace Twork\Template;
 
+use Twork\Theme;
+
 class Interceptor
 {
     protected $template;
+
+	/**
+	 * @var Theme $controller
+	 */
     protected $controller;
     protected $blade;
     protected $data;
     protected $scripts;
     protected $styles;
+    protected $controllerFooterScripts;
+    protected $controllerHeaderScripts;
+    protected $controllerStyles;
 
     public function __construct($template, $controller)
     {
@@ -22,10 +31,14 @@ class Interceptor
         if ($template === TWORK_PATH . '/' . $this->template) {
             $controller = new $this->controller();
 
-            $controller->processScripts();
-            $this->registerScripts($controller->footerScripts());
-            $this->registerScripts($controller->headerScripts());
-            $this->registerStyles($controller->styles());
+            $this->controllerFooterScripts = $controller->footerScripts();
+            $this->controllerHeaderScripts = $controller->headerScripts();
+            $this->controllerStyles        = $controller->styles();
+            $this->processScripts();
+
+            $this->registerScripts($this->controllerFooterScripts);
+            $this->registerScripts($this->controllerHeaderScripts);
+            $this->registerStyles($this->controllerStyles);
 
             add_action('wp_enqueue_scripts', [$this, 'enqueueAssets']);
 
@@ -36,7 +49,28 @@ class Interceptor
         return $template;
     }
 
-    public function registerScripts(array $scripts)
+	/**
+	 * Process the scripts specified for the template.
+	 */
+	public function processScripts()
+	{
+		$processedFooterScripts = [];
+		foreach ($this->controllerFooterScripts as $handle => $script) {
+			$processedFooterScripts[$handle] = $script;
+			$processedFooterScripts[$handle]['in_footer'] = true;
+		}
+		$this->controllerFooterScripts = $processedFooterScripts;
+
+		$processedHeaderScripts = [];
+		foreach ($this->controllerHeaderScripts as $handle => $script) {
+			$processedHeaderScripts[$handle] = $script;
+			$processedHeaderScripts[$handle]['in_footer'] = false;
+		}
+		$this->controllerHeaderScripts = $processedHeaderScripts;
+	}
+
+
+	public function registerScripts(array $scripts)
     {
         if (empty($scripts)) {
             return;

@@ -57,8 +57,6 @@ class Theme
             $template .= '.php';
         }
 
-        $this->processScripts();
-
         $interceptor = new Interceptor($template, $controller);
 
         add_filter('template_include', [$interceptor, 'templateInterceptor']);
@@ -104,25 +102,6 @@ class Theme
         return [];
     }
 
-    /**
-     * Process the scripts specified for the template.
-     */
-    public function processScripts()
-    {
-        $processedFooterScripts = [];
-        foreach ($this->footerScripts() as $handle => $script) {
-            $processedFooterScripts[$handle] = $script;
-            $processedFooterScripts[$handle]['in_footer'] = true;
-        }
-        $this->footerScripts = $processedFooterScripts;
-
-        $processedHeaderScripts = [];
-        foreach ($this->headerScripts() as $handle => $script) {
-            $processedHeaderScripts[$handle] = $script;
-            $processedHeaderScripts[$handle]['in_footer'] = false;
-        }
-        $this->headerScripts = $processedHeaderScripts;
-    }
 
     /**
      * Get Blade with the theme defaults.
