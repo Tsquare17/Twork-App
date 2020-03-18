@@ -16,8 +16,6 @@ gulp.task('sass', function() {
         .pipe(gulp.dest('resources/assets/css/dist'))
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('resources/assets/css/dist'))
-                // .pipe(reload({stream: true}));
-        .pipe(browserSync.stream({ match: 'resources/assets/css/src/**/*.scss' }))
 });
 
 gulp.task('js', function() {
@@ -25,7 +23,6 @@ gulp.task('js', function() {
         .pipe(uglify())
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('resources/assets/js/dist'))
-        .pipe(browserSync.stream({ match: 'resources/assets/js/src/**/*.js' }))
 });
 
 gulp.task('serve', function() {
