@@ -23,14 +23,14 @@ class FrontPageController extends Theme
     public function footerScripts()
     {
         return [
-            'front-page-script-handle' => $this->script('/test.js', ['jquery'])
+            'front-page-script-handle' => $this->script('/test.min.js', ['jquery'])
         ];
     }
 
     public function styles()
     {
         return [
-            'front-page-style-handle' => $this->style('/test.css')
+            'front-page-style-handle' => $this->style('/test.min.css')
         ];
     }
 }
