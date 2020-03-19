@@ -41,9 +41,9 @@ class MakeController extends TworkCli
         }
 
         $stub = $this->getControllerStub();
-
+        $templateName = Strings::pascalToKebab($name);
         $step1 = $this->replaceStubPascalCase($stub, $name . 'Controller');
-        $replacedStub = $this->replaceStubDashed($step1, Strings::pascalToKebab($name));
+        $replacedStub = $this->replaceStubDashed($step1, $templateName);
 
         $write = file_put_contents($newFile, $replacedStub);
 
@@ -53,6 +53,47 @@ class MakeController extends TworkCli
         }
 
         WP_CLI::line('Created controller ' . $newFile);
+
+        $configFile = TWORK_PATH . '/config/config.php';
+
+        $config = fopen($configFile, 'rwb');
+        $newConfig = '';
+        $afterTemplateLine = false;
+        $afterOpen = 0;
+        while(!feof($config)) {
+            $line = fgets($config);
+
+            if ($afterOpen === 2) {
+                $newConfig .= "use Twork\App\Controller\\{$name}Controller;" . PHP_EOL;
+                $afterOpen = false;
+            }
+
+            if ($afterTemplateLine) {
+                $newConfig .= $line . "        '{$templateName}' => {$name}Controller::class," . PHP_EOL;
+                $afterTemplateLine = false;
+            } else {
+                $newConfig .= $line;
+            }
+
+            if (strpos($line, '<?php') !== false) {
+                $afterOpen = 1;
+            } else {
+                $afterOpen++;
+            }
+            if (strpos($line, "'templates'") !== false) {
+                $afterTemplateLine = true;
+            }
+        }
+        fclose($config);
+
+        $writeConfig = file_put_contents(TWORK_PATH . '/config/config.php', $newConfig);
+
+        if (!$writeConfig) {
+            WP_CLI::line("Failed to add '{$templateName}' => {$name}Controller::class");
+            return 0;
+        }
+
+        WP_CLI::line("Registered '{$templateName}' => {$name}Controller::class");
         return 0;
     }
 }
