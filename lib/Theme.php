@@ -29,7 +29,7 @@ class Theme
     /**
      * @var string Name of the blade template.
      */
-    protected $template;
+    public $template;
 
     /**
      * Theme constructor.
@@ -58,8 +58,7 @@ class Theme
         }
 
         $interceptor = new Interceptor($template, $controller);
-
-        add_filter('template_include', [$interceptor, 'templateInterceptor']);
+        $interceptor->dispatch();
     }
 
     /**

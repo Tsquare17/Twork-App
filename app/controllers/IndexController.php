@@ -6,7 +6,7 @@ use Twork\Theme;
 
 class IndexController extends Theme
 {
-    protected $template;
+    public $template;
 
     public function __construct()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Twork\Models;
+namespace Twork\Queries;
 
 use Twork\Query\Query;
 

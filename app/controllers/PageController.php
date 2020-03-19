@@ -6,10 +6,17 @@ use Twork\Theme;
 
 class PageController extends Theme
 {
-    protected $template;
+    public $template;
 
     public function __construct()
     {
         $this->template = 'page';
+    }
+
+    public function data()
+    {
+        return [
+            'controller' => 'Page',
+        ];
     }
 }

@@ -18,7 +18,7 @@
             "Twork\\Cli\\": "lib/cli/",
             "Twork\\Cli\\Make\\": "lib/cli/make/",
             "Twork\\App\\Controllers\\": "app/controllers/",
-            "Twork\\App\\Models\\": "app/models"
+            "Twork\\App\\Queries\\": "app/queries"
         }
     },
     "require": {

@@ -23,30 +23,40 @@ class Interceptor
     public function __construct($template, $controller)
     {
         $this->template = $template;
-        $this->controller = $controller;
+        $this->controller = new $controller();
+    }
+
+    public function dispatch()
+    {
+        add_filter('template_include', [$this, 'templateInterceptor']);
     }
 
     public function templateInterceptor($template)
     {
         if ($template === TWORK_PATH . '/' . $this->template) {
-            $controller = new $this->controller();
-
-            $this->controllerFooterScripts = $controller->footerScripts();
-            $this->controllerHeaderScripts = $controller->headerScripts();
-            $this->controllerStyles        = $controller->styles();
-            $this->processScripts();
-
-            $this->registerScripts($this->controllerFooterScripts);
-            $this->registerScripts($this->controllerHeaderScripts);
-            $this->registerStyles($this->controllerStyles);
-
-            add_action('wp_enqueue_scripts', [$this, 'enqueueAssets']);
-
-            $controller->render();
+            $this->runController();
             return;
         }
 
         return $template;
+    }
+
+    public function runController()
+    {
+        $controller = $this->controller;
+
+        $this->controllerFooterScripts = $controller->footerScripts();
+        $this->controllerHeaderScripts = $controller->headerScripts();
+        $this->controllerStyles        = $controller->styles();
+        $this->processScripts();
+
+        $this->registerScripts($this->controllerFooterScripts);
+        $this->registerScripts($this->controllerHeaderScripts);
+        $this->registerStyles($this->controllerStyles);
+
+        add_action('wp_enqueue_scripts', [$this, 'enqueueAssets']);
+
+        $controller->render();
     }
 
 	/**
