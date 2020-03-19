@@ -1,2 +1,2 @@
-# T-Work - A WordPress Theme Framework.
+# Twork - A Minimal WordPress Theme Framework.
 
