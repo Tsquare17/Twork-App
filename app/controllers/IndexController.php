@@ -1,6 +1,6 @@
 <?php
 
-namespace Twork\App\Controller;
+namespace Twork\App\Controllers;
 
 use Twork\Theme;
 

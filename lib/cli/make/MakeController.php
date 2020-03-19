@@ -33,7 +33,7 @@ class MakeController extends TworkCli
             $name = str_replace('Controller', '', $name);
         }
 
-        $newFile = TWORK_PATH . '/app/controller/' . $name . 'Controller.php';
+        $newFile = TWORK_PATH . '/app/controllers/' . $name . 'Controller.php';
 
         if (file_exists($newFile)) {
             WP_CLI::line($newFile . ' already exists.');
@@ -64,7 +64,7 @@ class MakeController extends TworkCli
             $line = fgets($config);
 
             if ($afterOpen === 2) {
-                $newConfig .= "use Twork\App\Controller\\{$name}Controller;" . PHP_EOL;
+                $newConfig .= "use Twork\App\Controllers\\{$name}Controller;" . PHP_EOL;
                 $afterOpen = false;
             }
 

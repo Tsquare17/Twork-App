@@ -1,8 +1,8 @@
 <?php
 
-use Twork\App\Controller\FrontPageController;
-use Twork\App\Controller\IndexController;
-use Twork\App\Controller\PageController;
+use Twork\App\Controllers\FrontPageController;
+use Twork\App\Controllers\IndexController;
+use Twork\App\Controllers\PageController;
 
 return [
     'templates' => [

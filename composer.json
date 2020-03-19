@@ -13,10 +13,12 @@
         "psr-4": {
             "Twork\\": "lib/",
             "Twork\\Template\\": "lib/template/",
+            "Twork\\Query\\": "lib/query/",
             "Twork\\Utils\\": "lib/utils/",
             "Twork\\Cli\\": "lib/cli/",
             "Twork\\Cli\\Make\\": "lib/cli/make/",
-            "Twork\\App\\Controller\\": "app/controller/"
+            "Twork\\App\\Controllers\\": "app/controllers/",
+            "Twork\\App\\Models\\": "app/models"
         }
     },
     "require": {
@@ -25,7 +27,7 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
-        "squizlabs/php_codesniffer": "^3.5",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "scripts": {
         "sniff": "phpcs -p -s --colors --standard=phpcs.xml"
