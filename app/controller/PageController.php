@@ -6,8 +6,10 @@ use Twork\Theme;
 
 class PageController extends Theme
 {
+    protected $template;
+
     public function __construct()
     {
-        $this->registerTemplate('page', 'page');
+        $this->template = 'page';
     }
 }

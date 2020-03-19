@@ -6,8 +6,10 @@ use Twork\Theme;
 
 class IndexController extends Theme
 {
+    protected $template;
+
     public function __construct()
     {
-        $this->registerTemplate('index', 'index');
+        $this->template = 'index';
     }
 }
