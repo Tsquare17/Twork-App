@@ -16,7 +16,7 @@ class PageController extends Theme
     public function data()
     {
         return [
-            'controller' => 'Page',
+            'title' => 'Page',
         ];
     }
 }

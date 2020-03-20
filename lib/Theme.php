@@ -4,6 +4,7 @@ namespace Twork;
 
 use Jenssegers\Blade\Blade;
 use Twork\Template\Interceptor;
+use Twork\Template\Registrator;
 
 /**
  * Class Theme
@@ -41,7 +42,7 @@ class Theme
         $config = require TWORK_PATH . '/config/config.php';
 
         foreach ($config['templates'] as $template => $controller) {
-            $this->registerTemplate($template, $controller);
+            $this->overrideTemplate($template, $config['templates'], $controller);
         }
     }
 
@@ -49,16 +50,16 @@ class Theme
      * Override WordPress template includes.
      *
      * @param $template
+     * @param $pageTemplates
      * @param $controller
      */
-    public function registerTemplate($template, $controller)
+    public function overrideTemplate($template, $pageTemplates, $controller)
     {
         if (strpos(strrev($template), 'php.') !== 0) {
             $template .= '.php';
         }
 
-        $interceptor = new Interceptor($template, $controller);
-        $interceptor->dispatch();
+        new Interceptor($template, $pageTemplates, $controller);
     }
 
     /**

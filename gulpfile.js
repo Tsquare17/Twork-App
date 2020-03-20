@@ -16,6 +16,7 @@ gulp.task('sass', function() {
         .pipe(gulp.dest('resources/assets/css/dist'))
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('resources/assets/css/dist'))
+        .pipe(browserSync.stream())
 });
 
 gulp.task('js', function() {
@@ -33,7 +34,7 @@ gulp.task('serve', function() {
         injectChanges: true,
     });
 
-    gulp.watch('./resources/assets/css/src/**/*.scss', ['sass']).on('change', reload);
+    gulp.watch('./resources/assets/css/src/**/*.scss', ['sass']);
     gulp.watch('./resources/assets/js/src/**/*.js', ['js']).on('change', reload);
     gulp.watch(['./**/*.php']).on('change', reload);
 });

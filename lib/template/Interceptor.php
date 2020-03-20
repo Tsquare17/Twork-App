@@ -7,6 +7,7 @@ use Twork\Theme;
 class Interceptor
 {
     protected $template;
+    protected $pageTemplates;
 
 	/**
 	 * @var Theme $controller
@@ -20,19 +21,26 @@ class Interceptor
     protected $controllerHeaderScripts;
     protected $controllerStyles;
 
-    public function __construct($template, $controller)
+    public function __construct($template, $pageTemplates, $controller)
     {
         $this->template = $template;
+        $this->pageTemplates = $pageTemplates;
         $this->controller = new $controller();
-    }
 
-    public function dispatch()
-    {
         add_filter('template_include', [$this, 'templateInterceptor']);
     }
 
     public function templateInterceptor($template)
     {
+        global $post;
+
+        $pageTemplate = str_replace('.php', '', get_post_meta($post->ID, '_wp_page_template', true));
+        if ( isset( $this->pageTemplates[$pageTemplate]  ) ) {
+
+            $this->runController();
+            return;
+        }
+
         if ($template === TWORK_PATH . '/' . $this->template) {
             $this->runController();
             return;

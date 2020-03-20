@@ -9,5 +9,5 @@ return [
         'front-page' => FrontPageController::class,
         'index' => IndexController::class,
         'page' => PageController::class,
-    ]
+    ],
 ];
