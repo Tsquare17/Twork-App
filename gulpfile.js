@@ -9,10 +9,7 @@ var reload = browserSync.reload;
 gulp.task('sass', function() {
     return gulp.src('resources/assets/css/src/*.scss')
         .pipe(sass({ style: 'expanded' }))
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions', 'ie 9'],
-            cascade: false
-        }))
+        .pipe(autoprefixer())
         .pipe(gulp.dest('resources/assets/css/dist'))
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('resources/assets/css/dist'))
