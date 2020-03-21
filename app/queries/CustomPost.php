@@ -2,6 +2,7 @@
 
 namespace Twork\App\Queries;
 
+use Twork\Query\Post;
 use Twork\Query\Query;
 
 /**
@@ -19,12 +20,15 @@ class CustomPost extends Query
     }
 
     /**
-     * Set fields and values.
-     *
-     * @param $i
+     * Set post property values.
      */
-    public function set($i) {
-        $this->posts[$i]['id'] = get_the_ID();
-        $this->posts[$i]['title'] = get_the_title();
+    public function set()
+    {
+        $post = new Post();
+
+        $post->id = get_the_ID();
+        $post->title = get_the_title();
+
+        $this->posts[] = $post;
     }
 }

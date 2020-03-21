@@ -38,33 +38,29 @@ abstract class Query
     /**
      * Query posts and set fields.
      */
-    public function queryPosts() {
-        $i = 0;
+    public function queryPosts()
+    {
         if ($this->query->have_posts()) {
             while ($this->query->have_posts()) {
                 $this->query->the_post();
-
-                $this->set($i);
-
-                $i++;
+                $this->set();
             }
         }
         wp_reset_query();
     }
 
     /**
-     * Specify fields and values.
-     *
-     * @param $i
+     * Specify post property values.
      */
-    abstract public function set($i);
+    abstract public function set();
 
     /**
      * Get posts.
      *
      * @return array
      */
-    public function get() {
+    public function get()
+    {
         $this->queryPosts();
 
         return $this->posts;
