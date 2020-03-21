@@ -4,7 +4,6 @@ namespace Twork;
 
 use Jenssegers\Blade\Blade;
 use Twork\Template\Interceptor;
-use Twork\Template\Registrator;
 
 /**
  * Class Theme
