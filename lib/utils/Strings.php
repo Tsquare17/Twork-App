@@ -26,6 +26,13 @@ class Strings
         return implode('-', $matches[0]);
     }
 
+    public static function splitPascal($string, $glue): string
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $string, $matches);
+
+        return implode($glue, $matches[0]);
+    }
+
     /**
      * Attempt to return the singular form of a word.
      *
@@ -44,17 +51,5 @@ class Strings
         }
 
         return $string;
-    }
-
-    /**
-     * Return lower-case dashed string.
-     *
-     * @param $string
-     *
-     * @return string
-     */
-    public static function dashed($string): string
-    {
-        return str_replace(' ', '', self::pascalToKebab($string));
     }
 }

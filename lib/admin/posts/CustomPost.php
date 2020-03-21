@@ -96,7 +96,7 @@ abstract class CustomPost
     /**
      * Define the post type properties.
      *
-     * @return mixed
+     * @return void
      */
     abstract public function define();
 }

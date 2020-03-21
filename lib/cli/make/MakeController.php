@@ -96,4 +96,9 @@ class MakeController extends TworkCli
         WP_CLI::line("Registered '{$templateName}' => {$name}Controller::class");
         return 0;
     }
+
+    protected function getControllerStub()
+    {
+        return file_get_contents(TWORK_CLI_PATH . '/make/stubs/Controller.stub');
+    }
 }

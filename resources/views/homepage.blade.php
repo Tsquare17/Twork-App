@@ -5,6 +5,7 @@
         @wpTemplatePart('entry')
         @wpComments
     @endWpPosts
+
     @wpTemplatePart('nav', 'below')
 </main>
 @wpSidebar

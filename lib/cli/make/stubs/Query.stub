@@ -5,17 +5,17 @@ namespace Twork\App\Queries;
 use Twork\Query\Query;
 
 /**
- * Class CustomPost
+ * Class $:$
  * @package Twork\App\Queries
  */
-class CustomPost extends Query
+class $:$ extends Query
 {
     /**
-     * CustomPost constructor.
+     * $:$ constructor.
      */
     public function __construct()
     {
-        parent::__construct('custom-post');
+        parent::__construct('$:-:$');
     }
 
     /**

@@ -2,13 +2,13 @@
 
 namespace Twork\App\Posts;
 
-use Twork\Admin\Posts\CustomPost as AbstractCustomPost;
+use Twork\Admin\Posts\CustomPost;
 
 /**
- * Class CustomPost
+ * Class $:$
  * @package Twork\App\Posts
  */
-class CustomPost extends AbstractCustomPost
+class $:$ extends CustomPost
 {
     /**
      * Define the post type properties.
@@ -17,7 +17,7 @@ class CustomPost extends AbstractCustomPost
      */
     public function define()
     {
-        $this->postType = 'custom-post';
-        $this->name = 'Custom Posts';
+        $this->postType = '$:-:$';
+        $this->name = '$: :$';
     }
 }

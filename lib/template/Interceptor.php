@@ -32,15 +32,6 @@ class Interceptor
 
     public function templateInterceptor($template)
     {
-        global $post;
-
-        $pageTemplate = str_replace('.php', '', get_post_meta($post->ID, '_wp_page_template', true));
-        if ( isset( $this->pageTemplates[$pageTemplate]  ) ) {
-
-            $this->runController();
-            return;
-        }
-
         if ($template === TWORK_PATH . '/' . $this->template) {
             $this->runController();
             return;
