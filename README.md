@@ -7,9 +7,7 @@
 - WP-CLI command for creating and registering controllers.
 
 ### Installation
-- composer require twork/app
+- composer create-project twork/app
 
 ### Make Controller
-(assumes wp-cli installed as wp)
-
 - wp twork make controller Example
