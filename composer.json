@@ -17,8 +17,11 @@
             "Twork\\Utils\\": "lib/utils/",
             "Twork\\Cli\\": "lib/cli/",
             "Twork\\Cli\\Make\\": "lib/cli/make/",
+            "Twork\\Admin\\": "lib/admin/",
+            "Twork\\Admin\\Posts\\": "lib/admin/posts",
             "Twork\\App\\Controllers\\": "app/controllers/",
-            "Twork\\App\\Queries\\": "app/queries"
+            "Twork\\App\\Queries\\": "app/queries",
+            "Twork\\App\\Posts\\": "app/posts"
         }
     },
     "require": {

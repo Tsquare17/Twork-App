@@ -15,7 +15,7 @@ class Strings
      *
      * @return string
      */
-    public static function pascalToKebab($string)
+    public static function pascalToKebab($string): string
     {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $string, $matches);
 
@@ -24,5 +24,37 @@ class Strings
         }
 
         return implode('-', $matches[0]);
+    }
+
+    /**
+     * Attempt to return the singular form of a word.
+     *
+     * @param $string
+     *
+     * @return string
+     */
+    public static function singular($string): string
+    {
+        if (strpos(strrev($string), 'sei') === 0) {
+            return substr($string, 0, -3) . 'y';
+        }
+
+        if (strpos(strrev($string), 's') === 0) {
+            return substr($string, 0, -1);
+        }
+
+        return $string;
+    }
+
+    /**
+     * Return lower-case dashed string.
+     *
+     * @param $string
+     *
+     * @return string
+     */
+    public static function dashed($string): string
+    {
+        return str_replace(' ', '', self::pascalToKebab($string));
     }
 }

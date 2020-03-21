@@ -7,7 +7,6 @@
             </a>
             {!! is_front_page() || is_home() ? '</h1>' : '' !!}
         </div>
-        <div id="site-description">{{ get_bloginfo('description') }}</div>
     </div>
     @include('partials.header.nav')
 </header>

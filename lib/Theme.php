@@ -34,14 +34,28 @@ class Theme
     /**
      * Theme constructor.
      *
-     * Loop over template-controller map, registering blade templates.
+     * Initialize Theme's Custom Posts and Templates.
      */
     public function __construct()
     {
         $config = require TWORK_PATH . '/config/config.php';
 
+        $this->registerCustomPosts();
+
         foreach ($config['templates'] as $template => $controller) {
             $this->overrideTemplate($template, $config['templates'], $controller);
+        }
+    }
+
+    /**
+     * Register Custom Post Types.
+     */
+    public function registerCustomPosts(): void
+    {
+        $files = array_diff(scandir(TWORK_PATH . '/app/posts'), ['.', '..']);
+        foreach ($files as $file) {
+            $class = 'Twork\\App\\Posts\\' . str_replace('.php', '', $file);
+            new $class();
         }
     }
 
@@ -52,7 +66,7 @@ class Theme
      * @param $pageTemplates
      * @param $controller
      */
-    public function overrideTemplate($template, $pageTemplates, $controller)
+    public function overrideTemplate($template, $pageTemplates, $controller): void
     {
         if (strpos(strrev($template), 'php.') !== 0) {
             $template .= '.php';
@@ -107,7 +121,7 @@ class Theme
      *
      * @return Blade
      */
-    public static function getBlade()
+    public static function getBlade(): Blade
     {
         $blade = new Blade(TWORK_PATH . '/resources/views', TWORK_PATH . '/cache');
 
@@ -130,7 +144,8 @@ class Theme
      *
      * @return array
      */
-    protected function script($path, array $dependencies = null) {
+    protected function script($path, array $dependencies = null): array
+    {
         return ['path' => TWORK_JS_URL . $path, 'dependencies' => $dependencies, 'version' => TWORK_VERSION];
     }
 
@@ -142,7 +157,7 @@ class Theme
      *
      * @return array
      */
-    protected function style($path, array $dependencies = null)
+    protected function style($path, array $dependencies = null): array
     {
         return ['path' => TWORK_CSS_URL . $path, 'dependencies' => $dependencies, 'version' => TWORK_VERSION];
     }
@@ -150,7 +165,7 @@ class Theme
     /**
      * Render Blade template.
      */
-    public function render()
+    public function render(): void
     {
         echo self::getBlade()->render($this->template, $this->data());
     }
