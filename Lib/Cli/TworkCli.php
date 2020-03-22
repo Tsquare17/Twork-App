@@ -77,7 +77,7 @@ class TworkCli
 
     public function getStub($name)
     {
-        return file_get_contents(TWORK_CLI_PATH . "/make/stubs/{$name}.stub");
+        return file_get_contents(TWORK_CLI_PATH . "/Make/Stubs/{$name}.stub");
     }
 
     protected function replaceStubPascalCase(string $stub, string $new)

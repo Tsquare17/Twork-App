@@ -33,14 +33,14 @@ class MakeController extends TworkCli
             $name = str_replace('Controller', '', $name);
         }
 
-        $newFile = TWORK_PATH . '/app/controllers/' . $name . 'Controller.php';
+        $newFile = TWORK_PATH . '/App/Controllers/' . $name . 'Controller.php';
 
         if (file_exists($newFile)) {
             WP_CLI::line($newFile . ' already exists.');
             return 0;
         }
 
-        $stub = $this->getControllerStub();
+        $stub = $this->getStub('Controller');
         $templateName = Strings::pascalToKebab($name);
         $step1 = $this->replaceStubPascalCase($stub, $name . 'Controller');
         $replacedStub = $this->replaceStubDashed($step1, $templateName);
@@ -54,7 +54,7 @@ class MakeController extends TworkCli
 
         WP_CLI::line('Created controller ' . $newFile);
 
-        $configFile = TWORK_PATH . '/config/config.php';
+        $configFile = TWORK_PATH . '/Config/config.php';
 
         $config = fopen($configFile, 'rwb');
         $newConfig = '';
@@ -86,7 +86,7 @@ class MakeController extends TworkCli
         }
         fclose($config);
 
-        $writeConfig = file_put_contents(TWORK_PATH . '/config/config.php', $newConfig);
+        $writeConfig = file_put_contents(TWORK_PATH . '/Config/config.php', $newConfig);
 
         if (!$writeConfig) {
             WP_CLI::line("Failed to add '{$templateName}' => {$name}Controller::class");
@@ -95,10 +95,5 @@ class MakeController extends TworkCli
 
         WP_CLI::line("Registered '{$templateName}' => {$name}Controller::class");
         return 0;
-    }
-
-    protected function getControllerStub()
-    {
-        return file_get_contents(TWORK_CLI_PATH . '/make/stubs/Controller.stub');
     }
 }

@@ -10,10 +10,10 @@ use WP_CLI;
  * Class MakeController
  * @package Twork\Cli\Make
  */
-class MakeQuery extends TworkCli
+class MakeCustomPost extends TworkCli
 {
     /**
-     * MakeQuery constructor.
+     * MakeCustomPost constructor.
      *
      * @param $name
      */
@@ -30,16 +30,22 @@ class MakeQuery extends TworkCli
     public function execute($name)
     {
 
-        $newFile = TWORK_PATH . '/app/queries/' . $name . '.php';
+        $newFile = TWORK_PATH . '/App/Posts/' . $name . '.php';
 
-        $this->verifyFileNotExisting($newFile);
+        if (file_exists($newFile)) {
+            WP_CLI::line($newFile . ' already exists.');
+            return 0;
+        }
 
-        $stub = $this->getStub('Query');
+        $stub = $this->getStub('CustomPost');
 
         $templateName = Strings::pascalToKebab($name);
         $step1 = $this->replaceStubPascalCase($stub, $name);
 
-        $replacedStub = $this->replaceStubDashed($step1, $templateName);
+        $label = Strings::splitPascal($name, ' ');
+        $step2 = $this->replaceStubSpaced($step1, $label);
+
+        $replacedStub = $this->replaceStubDashed($step2, $templateName);
 
         $write = file_put_contents($newFile, $replacedStub);
 
@@ -48,7 +54,7 @@ class MakeQuery extends TworkCli
             return 0;
         }
 
-        WP_CLI::line('Created query ' . $newFile);
+        WP_CLI::line('Created custom post ' . $newFile);
         return 0;
     }
 }

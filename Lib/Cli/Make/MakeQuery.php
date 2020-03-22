@@ -10,10 +10,10 @@ use WP_CLI;
  * Class MakeController
  * @package Twork\Cli\Make
  */
-class MakeCustomPost extends TworkCli
+class MakeQuery extends TworkCli
 {
     /**
-     * MakeCustomPost constructor.
+     * MakeQuery constructor.
      *
      * @param $name
      */
@@ -30,22 +30,16 @@ class MakeCustomPost extends TworkCli
     public function execute($name)
     {
 
-        $newFile = TWORK_PATH . '/app/posts/' . $name . '.php';
+        $newFile = TWORK_PATH . '/App/Queries/' . $name . '.php';
 
-        if (file_exists($newFile)) {
-            WP_CLI::line($newFile . ' already exists.');
-            return 0;
-        }
+        $this->verifyFileNotExisting($newFile);
 
-        $stub = $this->getCustomPostStub();
+        $stub = $this->getStub('Query');
 
         $templateName = Strings::pascalToKebab($name);
         $step1 = $this->replaceStubPascalCase($stub, $name);
 
-        $label = Strings::splitPascal($name, ' ');
-        $step2 = $this->replaceStubSpaced($step1, $label);
-
-        $replacedStub = $this->replaceStubDashed($step2, $templateName);
+        $replacedStub = $this->replaceStubDashed($step1, $templateName);
 
         $write = file_put_contents($newFile, $replacedStub);
 
@@ -54,12 +48,7 @@ class MakeCustomPost extends TworkCli
             return 0;
         }
 
-        WP_CLI::line('Created custom post ' . $newFile);
+        WP_CLI::line('Created query ' . $newFile);
         return 0;
-    }
-
-    protected function getCustomPostStub()
-    {
-        return file_get_contents(TWORK_CLI_PATH . '/make/stubs/CustomPost.stub');
     }
 }

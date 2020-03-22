@@ -38,7 +38,7 @@ class Theme
      */
     public function __construct()
     {
-        $config = require TWORK_PATH . '/config/config.php';
+        $config = require TWORK_PATH . '/Config/config.php';
 
         $this->registerCustomPosts();
 
@@ -52,7 +52,7 @@ class Theme
      */
     public function registerCustomPosts(): void
     {
-        $files = array_diff(scandir(TWORK_PATH . '/app/posts'), ['.', '..']);
+        $files = array_diff(scandir(TWORK_PATH . '/App/Posts'), ['.', '..']);
         foreach ($files as $file) {
             $class = 'Twork\\App\\Posts\\' . str_replace('.php', '', $file);
             new $class();
@@ -115,7 +115,6 @@ class Theme
         return [];
     }
 
-
     /**
      * Get Blade with the theme defaults.
      *
@@ -125,7 +124,7 @@ class Theme
     {
         $blade = new Blade(TWORK_PATH . '/resources/views', TWORK_PATH . '/cache');
 
-        $path = TWORK_PATH . '/lib/blade/';
+        $path = TWORK_PATH . '/Lib/Blade/';
 
         $files = array_diff(scandir($path), ['.', '..']);
 
