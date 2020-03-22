@@ -26,7 +26,7 @@ class CustomPost extends Query
     {
         $post = new Post();
 
-        $post->id = get_the_ID();
+        $post->id    = get_the_ID();
         $post->title = get_the_title();
 
         $this->posts[] = $post;
