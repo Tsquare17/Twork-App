@@ -23,7 +23,7 @@ class Theme
         $this->registerCustomPosts();
 
         foreach ($config['templates'] as $template => $controller) {
-            $this->overrideTemplate($template, $config['templates'], $controller);
+            $this->overrideTemplate($template, $controller);
         }
     }
 
@@ -43,16 +43,15 @@ class Theme
      * Override WordPress template includes.
      *
      * @param $template
-     * @param $pageTemplates
      * @param $controller
      */
-    public function overrideTemplate($template, $pageTemplates, $controller): void
+    public function overrideTemplate($template, $controller): void
     {
         if (strpos(strrev($template), 'php.') !== 0) {
             $template .= '.php';
         }
 
-        new Interceptor($template, $pageTemplates, $controller);
+        new Interceptor($template, $controller);
     }
 
     /**

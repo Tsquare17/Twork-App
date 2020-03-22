@@ -4,28 +4,57 @@ namespace Twork\Template;
 
 use Twork\Controller;
 
+/**
+ * Class Interceptor
+ * @package Twork\Template
+ */
 class Interceptor
 {
+    /**
+     * @var string Name of the template.
+     */
     protected $template;
-    protected $pageTemplates;
 
     /**
-     * @var Controller $controller
+     * @var string Controller to use.
      */
     protected $controller;
-    protected $blade;
-    protected $data;
+
+    /**
+     * @var array Scripts ready to be enqueued.
+     */
     protected $scripts;
+
+    /**
+     * @var array Styles ready to be enqueued.
+     */
     protected $styles;
+
+    /**
+     * @var array Scripts from the controller to be enqueued in the footer.
+     */
     protected $controllerFooterScripts;
+
+    /**
+     * @var array Scripts from the controller to be enqueued in the header.
+     */
     protected $controllerHeaderScripts;
+
+    /**
+     * @var array Styles from the controller.
+     */
     protected $controllerStyles;
 
-    public function __construct($template, $pageTemplates, $controller)
+    /**
+     * Interceptor constructor.
+     *
+     * @param $template
+     * @param $controller
+     */
+    public function __construct($template, $controller)
     {
         $this->template      = $template;
-        $this->pageTemplates = $pageTemplates;
-        $this->controller    = new $controller();
+        $this->controller    = $controller;
 
         add_filter('template_include', [$this, 'templateInterceptor']);
     }
@@ -34,13 +63,14 @@ class Interceptor
      * template_include filter.
      *
      * @param $template
+     *
+     * @return mixed
      */
     public function templateInterceptor($template)
     {
         if ($template === TWORK_PATH . '/' . $this->template) {
             $this->runController();
-
-            return;
+            return null;
         }
 
         return $template;
@@ -51,16 +81,17 @@ class Interceptor
      */
     public function runController(): void
     {
-        $controller = $this->controller;
+        /**
+         * @var Controller $controller
+         */
+        $controller = new $this->controller();
 
         $this->controllerFooterScripts = $controller->footerScripts();
         $this->controllerHeaderScripts = $controller->headerScripts();
         $this->controllerStyles        = $controller->styles();
-        $this->processScripts();
 
-        $this->registerScripts($this->controllerFooterScripts);
-        $this->registerScripts($this->controllerHeaderScripts);
-        $this->registerStyles($this->controllerStyles);
+        $this->processScripts();
+        $this->processStyles();
 
         add_action('wp_enqueue_scripts', [$this, 'enqueueAssets']);
 
@@ -68,54 +99,44 @@ class Interceptor
     }
 
     /**
-     * Process the scripts specified for the template.
+     * Process scripts to be enqueued.
      */
     public function processScripts(): void
     {
         $processedFooterScripts = [];
         foreach ($this->controllerFooterScripts as $handle => $script) {
-            $processedFooterScripts[$handle]              = $script;
-            $processedFooterScripts[$handle]['in_footer'] = true;
+            $script['handle']         = $handle;
+            $script['in_footer']      = true;
+            $processedFooterScripts[] = $script;
         }
         $this->controllerFooterScripts = $processedFooterScripts;
 
+        if (!empty($processedFooterScripts)) {
+            $this->scripts = $processedFooterScripts;
+        }
+
         $processedHeaderScripts = [];
         foreach ($this->controllerHeaderScripts as $handle => $script) {
-            $processedHeaderScripts[$handle]              = $script;
-            $processedHeaderScripts[$handle]['in_footer'] = false;
+            $script['handle']         = $script;
+            $script['in_footer']      = false;
+            $processedHeaderScripts[] = $script;
         }
         $this->controllerHeaderScripts = $processedHeaderScripts;
-    }
-
-    /**
-     * @param array $scripts
-     */
-    public function registerScripts(array $scripts): void
-    {
-        if (empty($scripts)) {
-            return;
-        }
-
-        $registeredScripts = [];
-        foreach ($scripts as $handle => $script) {
-            $script['handle']    = $handle;
-            $registeredScripts[] = $script;
-        }
 
         if (empty($this->scripts)) {
-            $this->scripts = $registeredScripts;
+            $this->scripts = $processedHeaderScripts;
         } else {
-            $this->scripts = array_merge($this->scripts, $registeredScripts);
+            $this->scripts = array_merge($this->scripts, $processedHeaderScripts);
         }
     }
 
     /**
-     * @param array $styles
+     * Process styles to be enqueued.
      */
-    public function registerStyles(array $styles): void
+    public function processStyles(): void
     {
         $registeredStyles = [];
-        foreach ($styles as $handle => $style) {
+        foreach ($this->controllerStyles as $handle => $style) {
             $style['handle']    = $handle;
             $registeredStyles[] = $style;
         }
@@ -141,10 +162,6 @@ class Interceptor
      */
     protected function enqueueScripts(): void
     {
-        if (empty($this->scripts)) {
-            return;
-        }
-
         foreach ($this->scripts as $script) {
             wp_enqueue_script(
                 $script['handle'],
