@@ -1,6 +1,4 @@
 # Twork - WordPress Theme Framework.
-
-## WordPress Theme Development with a Modern Workflow
 - Clean templating with Twork's controllers and queries, and the Blade templating engine.
 - Auto Sass and JavaScript compilation, and auto inject/reload with Browsersync.
 - WP-CLI command for creating and registering controllers, custom posts, and queries.
