@@ -60,7 +60,7 @@ class MakeController extends TworkCli
         $newConfig = '';
         $afterTemplateLine = false;
         $afterOpen = 0;
-        while(!feof($config)) {
+        while (!feof($config)) {
             $line = fgets($config);
 
             if ($afterOpen === 2) {

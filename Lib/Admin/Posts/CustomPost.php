@@ -78,7 +78,7 @@ abstract class CustomPost
             'register_meta_box_cb' => $this->registerMetaBoxCallback,
         ];
 
-        add_action('init', static function() use ($postType, $postArgs) {
+        add_action('init', static function () use ($postType, $postArgs) {
             register_post_type($postType, $postArgs);
         });
     }

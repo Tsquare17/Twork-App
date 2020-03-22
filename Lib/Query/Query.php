@@ -30,8 +30,9 @@ abstract class Query
     {
         $args = $args ?? [
                 'posts_per_page' => '10',
-                'post_type'	     => $type,
+                'post_type'      => $type,
             ];
+
         $this->query = new WP_Query($args);
     }
 

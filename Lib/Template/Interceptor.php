@@ -9,9 +9,9 @@ class Interceptor
     protected $template;
     protected $pageTemplates;
 
-	/**
-	 * @var Theme $controller
-	 */
+    /**
+     * @var Theme $controller
+     */
     protected $controller;
     protected $blade;
     protected $data;
@@ -23,23 +23,32 @@ class Interceptor
 
     public function __construct($template, $pageTemplates, $controller)
     {
-        $this->template = $template;
+        $this->template      = $template;
         $this->pageTemplates = $pageTemplates;
-        $this->controller = new $controller();
+        $this->controller    = new $controller();
 
         add_filter('template_include', [$this, 'templateInterceptor']);
     }
 
+    /**
+     * template_include filter.
+     *
+     * @param $template
+     */
     public function templateInterceptor($template)
     {
         if ($template === TWORK_PATH . '/' . $this->template) {
             $this->runController();
+
             return;
         }
 
         return $template;
     }
 
+    /**
+     * Collect and enqueue assets, and render the template.
+     */
     public function runController()
     {
         $controller = $this->controller;
@@ -58,28 +67,30 @@ class Interceptor
         $controller->render();
     }
 
-	/**
-	 * Process the scripts specified for the template.
-	 */
-	public function processScripts()
-	{
-		$processedFooterScripts = [];
-		foreach ($this->controllerFooterScripts as $handle => $script) {
-			$processedFooterScripts[$handle] = $script;
-			$processedFooterScripts[$handle]['in_footer'] = true;
-		}
-		$this->controllerFooterScripts = $processedFooterScripts;
+    /**
+     * Process the scripts specified for the template.
+     */
+    public function processScripts()
+    {
+        $processedFooterScripts = [];
+        foreach ($this->controllerFooterScripts as $handle => $script) {
+            $processedFooterScripts[$handle]              = $script;
+            $processedFooterScripts[$handle]['in_footer'] = true;
+        }
+        $this->controllerFooterScripts = $processedFooterScripts;
 
-		$processedHeaderScripts = [];
-		foreach ($this->controllerHeaderScripts as $handle => $script) {
-			$processedHeaderScripts[$handle] = $script;
-			$processedHeaderScripts[$handle]['in_footer'] = false;
-		}
-		$this->controllerHeaderScripts = $processedHeaderScripts;
-	}
+        $processedHeaderScripts = [];
+        foreach ($this->controllerHeaderScripts as $handle => $script) {
+            $processedHeaderScripts[$handle]              = $script;
+            $processedHeaderScripts[$handle]['in_footer'] = false;
+        }
+        $this->controllerHeaderScripts = $processedHeaderScripts;
+    }
 
-
-	public function registerScripts(array $scripts)
+    /**
+     * @param array $scripts
+     */
+    public function registerScripts(array $scripts)
     {
         if (empty($scripts)) {
             return;
@@ -87,7 +98,7 @@ class Interceptor
 
         $registeredScripts = [];
         foreach ($scripts as $handle => $script) {
-            $script['handle'] = $handle;
+            $script['handle']    = $handle;
             $registeredScripts[] = $script;
         }
 
@@ -98,11 +109,14 @@ class Interceptor
         }
     }
 
+    /**
+     * @param array $styles
+     */
     public function registerStyles(array $styles)
     {
         $registeredStyles = [];
         foreach ($styles as $handle => $style) {
-            $style['handle'] = $handle;
+            $style['handle']    = $handle;
             $registeredStyles[] = $style;
         }
 
@@ -113,12 +127,18 @@ class Interceptor
         }
     }
 
+    /**
+     * Hooked from wp_enqueue_assets.
+     */
     public function enqueueAssets()
     {
         $this->enqueueScripts();
         $this->enqueueStyles();
     }
 
+    /**
+     * Enqueue scripts.
+     */
     protected function enqueueScripts()
     {
         if (empty($this->scripts)) {
@@ -136,6 +156,9 @@ class Interceptor
         }
     }
 
+    /**
+     * Enqueue styles.
+     */
     protected function enqueueStyles()
     {
         foreach ($this->styles as $style) {
