@@ -9,5 +9,11 @@
 ### Installation
 - composer create-project twork/app
 
-### Make Controller
+### Make a Controller
 - wp twork make controller Example
+
+### Make a New Custom Post Type
+- wp twork make post Example
+
+### Make a New Query
+- wp twork make query Example
