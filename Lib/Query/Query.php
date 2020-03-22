@@ -39,7 +39,7 @@ abstract class Query
     /**
      * Query posts and set fields.
      */
-    public function queryPosts()
+    public function queryPosts(): void
     {
         if ($this->query->have_posts()) {
             while ($this->query->have_posts()) {
@@ -47,7 +47,7 @@ abstract class Query
                 $this->set();
             }
         }
-        wp_reset_query();
+        wp_reset_postdata();
     }
 
     /**
@@ -60,7 +60,7 @@ abstract class Query
      *
      * @return array
      */
-    public function get()
+    public function get(): array
     {
         $this->queryPosts();
 

@@ -4,8 +4,8 @@
     <div class="posts">
         <h2>Posts</h2>
         @wpPosts
-        @wpTemplatePart('entry')
-        @wpComments
+            @wpTemplatePart('entry')
+            @wpComments
         @endWpPosts
     </div>
 

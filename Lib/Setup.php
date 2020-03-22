@@ -22,7 +22,7 @@ class Setup
     /**
      * Enqueue global scripts.
      */
-    public function enqueueGlobalScripts()
+    public function enqueueGlobalScripts(): void
     {
         wp_enqueue_script('twork-js', TWORK_JS_URL . '/twork.min.js', ['jquery'], TWORK_VERSION, true);
     }
@@ -30,7 +30,7 @@ class Setup
     /**
      * Enqueue global styles.
      */
-    public function enqueueGlobalStyles()
+    public function enqueueGlobalStyles(): void
     {
         wp_enqueue_style('twork-stylesheet', get_stylesheet_uri(), null, TWORK_VERSION);
         wp_enqueue_style('twork-css', TWORK_CSS_URL . '/twork.min.css', null, TWORK_VERSION);
@@ -39,7 +39,7 @@ class Setup
     /**
      * Run Theme, Run!
      */
-    protected function run()
+    protected function run(): void
     {
         new Theme();
     }
