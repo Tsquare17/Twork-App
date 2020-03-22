@@ -3,26 +3,18 @@
 namespace Twork\App\Controllers;
 
 use Twork\App\Queries\CustomPost;
-use Twork\Theme;
+use Twork\Controller;
 
 /**
  * Class FrontPageController
  * @package Twork\App\Controllers
  */
-class FrontPageController extends Theme
+class FrontPageController extends Controller
 {
     /**
      * @var string The name of the blade template.
      */
-    public $template;
-
-    /**
-     * FrontPageController constructor.
-     */
-    public function __construct()
-    {
-        $this->template = 'homepage';
-    }
+    public $template = 'homepage';
 
     /**
      * Return an array of variables to pass to the template.

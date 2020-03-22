@@ -2,26 +2,18 @@
 
 namespace Twork\App\Controllers;
 
-use Twork\Theme;
+use Twork\Controller;
 
 /**
  * Class PageController
  * @package Twork\App\Controllers
  */
-class PageController extends Theme
+class PageController extends Controller
 {
     /**
      * @var string The name of the blade template.
      */
-    public $template;
-
-    /**
-     * PageController constructor.
-     */
-    public function __construct()
-    {
-        $this->template = 'page';
-    }
+    public $template = 'page';
 
     /**
      * Return an array of variables to pass to the template.

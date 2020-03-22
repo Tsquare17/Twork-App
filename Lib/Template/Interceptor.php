@@ -2,7 +2,7 @@
 
 namespace Twork\Template;
 
-use Twork\Theme;
+use Twork\Controller;
 
 class Interceptor
 {
@@ -10,7 +10,7 @@ class Interceptor
     protected $pageTemplates;
 
     /**
-     * @var Theme $controller
+     * @var Controller $controller
      */
     protected $controller;
     protected $blade;
@@ -49,7 +49,7 @@ class Interceptor
     /**
      * Collect and enqueue assets, and render the template.
      */
-    public function runController()
+    public function runController(): void
     {
         $controller = $this->controller;
 
@@ -70,7 +70,7 @@ class Interceptor
     /**
      * Process the scripts specified for the template.
      */
-    public function processScripts()
+    public function processScripts(): void
     {
         $processedFooterScripts = [];
         foreach ($this->controllerFooterScripts as $handle => $script) {
@@ -90,7 +90,7 @@ class Interceptor
     /**
      * @param array $scripts
      */
-    public function registerScripts(array $scripts)
+    public function registerScripts(array $scripts): void
     {
         if (empty($scripts)) {
             return;
@@ -112,7 +112,7 @@ class Interceptor
     /**
      * @param array $styles
      */
-    public function registerStyles(array $styles)
+    public function registerStyles(array $styles): void
     {
         $registeredStyles = [];
         foreach ($styles as $handle => $style) {
@@ -130,7 +130,7 @@ class Interceptor
     /**
      * Hooked from wp_enqueue_assets.
      */
-    public function enqueueAssets()
+    public function enqueueAssets(): void
     {
         $this->enqueueScripts();
         $this->enqueueStyles();
@@ -139,7 +139,7 @@ class Interceptor
     /**
      * Enqueue scripts.
      */
-    protected function enqueueScripts()
+    protected function enqueueScripts(): void
     {
         if (empty($this->scripts)) {
             return;
@@ -159,7 +159,7 @@ class Interceptor
     /**
      * Enqueue styles.
      */
-    protected function enqueueStyles()
+    protected function enqueueStyles(): void
     {
         foreach ($this->styles as $style) {
             wp_enqueue_style(

@@ -2,24 +2,16 @@
 
 namespace Twork\App\Controllers;
 
-use Twork\Theme;
+use Twork\Controller;
 
 /**
  * Class $:$
  * @package Twork\App\Controllers
  */
-class $:$ extends Theme
+class $:$ extends Controller
 {
     /**
      * @var string The name of the blade template.
      */
-    public $template;
-
-    /**
-     * $:$ constructor.
-     */
-    public function __construct()
-    {
-        $this->template = '$:-:$';
-    }
+    public $template = '$:-:$';
 }

@@ -2,24 +2,16 @@
 
 namespace Twork\App\Controllers;
 
-use Twork\Theme;
+use Twork\Controller;
 
 /**
  * Class IndexController
  * @package Twork\App\Controllers
  */
-class IndexController extends Theme
+class IndexController extends Controller
 {
     /**
      * @var string The name of the blade template.
      */
-    public $template;
-
-    /**
-     * IndexController constructor.
-     */
-    public function __construct()
-    {
-        $this->template = 'index';
-    }
+    public $template = 'index';
 }
