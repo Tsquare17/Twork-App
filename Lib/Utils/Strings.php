@@ -26,6 +26,14 @@ class Strings
         return implode('-', $matches[0]);
     }
 
+    /**
+     * Split a PascalCase string with the specified glue.
+     *
+     * @param $string
+     * @param $glue
+     *
+     * @return string
+     */
     public static function splitPascal($string, $glue): string
     {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $string, $matches);
