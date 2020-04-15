@@ -2,4 +2,4 @@
 
 use Twork\Theme;
 
-echo Theme::getBlade()->render('wp_template/footer');
+echo Theme::getBlade()->render('wp_template.footer');

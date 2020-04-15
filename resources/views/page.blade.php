@@ -4,7 +4,6 @@
     @wpPosts
         {!! get_the_content() !!}
     @endWpPosts
-    @wpTemplatePart('nav', 'below')
 </main>
 @wpSidebar
 @wpFooter

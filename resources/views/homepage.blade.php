@@ -4,7 +4,7 @@
     <div class="posts">
         <h2>Posts</h2>
         @wpPosts
-            @wpTemplatePart('entry')
+            @include('partials.posts.entry')
             @wpComments
         @endWpPosts
     </div>
@@ -17,7 +17,6 @@
             No Custom Posts
         @endforelse
     </div>
-    @wpTemplatePart('nav', 'below')
 </main>
 @wpSidebar
 @wpFooter

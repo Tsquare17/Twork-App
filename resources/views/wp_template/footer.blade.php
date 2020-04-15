@@ -3,6 +3,6 @@
         &copy; {{ date('Y') }} {{ esc_html(get_bloginfo('name')) }}
     </div>
 </footer>
-{!! wp_footer() !!}
+<?php wp_footer() ?>
 </body>
 </html>

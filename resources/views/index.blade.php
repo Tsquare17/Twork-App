@@ -1,10 +1,9 @@
 @wpHeader
 <main id="content">
     @wpPosts
-            @wpTemplatePart('entry')
+            @include('partials.posts.entry')
             @wpComments
     @endWpPosts
-    @wpTemplatePart('nav', 'below')
 </main>
 @wpSidebar
 @wpFooter
