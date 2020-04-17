@@ -72,10 +72,14 @@ abstract class MenuPage
     /**
      * Actions to run on admin_init.
      */
-    public function actions() {}
+    public function actions()
+    {
+    }
 
     /**
      * Scripts to enqueue.
      */
-    public function scripts() {}
+    public function scripts()
+    {
+    }
 }

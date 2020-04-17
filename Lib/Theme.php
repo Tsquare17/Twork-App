@@ -21,11 +21,11 @@ class Theme
         $config = require TWORK_PATH . '/Config/config.php';
 
         foreach ($config['custom_posts'] as $customPost) {
-            new $customPost;
+            new $customPost();
         }
 
         foreach ($config['dashboard_menus'] as $dashboardMenu) {
-            new $dashboardMenu;
+            new $dashboardMenu();
         }
 
         foreach ($config['templates'] as $template => $controller) {
