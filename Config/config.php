@@ -3,6 +3,8 @@
 use Twork\App\Controllers\FrontPageController;
 use Twork\App\Controllers\IndexController;
 use Twork\App\Controllers\PageController;
+use Twork\App\Posts\CustomPost;
+use Twork\App\Admin\MenuPages\Example;
 
 return [
     'templates' => [
@@ -10,4 +12,10 @@ return [
         'index' => IndexController::class,
         'page' => PageController::class,
     ],
+    'custom_posts' => [
+        CustomPost::class,
+    ],
+    'dashboard_menus' => [
+        Example::class,
+    ]
 ];

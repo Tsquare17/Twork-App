@@ -89,7 +89,7 @@ class MakeController extends TworkCli
         $writeConfig = file_put_contents(TWORK_PATH . '/Config/config.php', $newConfig);
 
         if (!$writeConfig) {
-            WP_CLI::line("Failed to add '{$templateName}' => {$name}Controller::class");
+            WP_CLI::line("Failed to write '{$templateName}' => {$name}Controller::class to config");
             return 0;
         }
 

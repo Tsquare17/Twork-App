@@ -20,22 +20,16 @@ class Theme
     {
         $config = require TWORK_PATH . '/Config/config.php';
 
-        $this->registerCustomPosts();
+        foreach ($config['custom_posts'] as $customPost) {
+            new $customPost;
+        }
+
+        foreach ($config['dashboard_menus'] as $dashboardMenu) {
+            new $dashboardMenu;
+        }
 
         foreach ($config['templates'] as $template => $controller) {
             $this->overrideTemplate($template, $controller);
-        }
-    }
-
-    /**
-     * Register Custom Post Types.
-     */
-    public function registerCustomPosts(): void
-    {
-        $files = array_diff(scandir(TWORK_PATH . '/App/Posts'), ['.', '..']);
-        foreach ($files as $file) {
-            $class = 'Twork\\App\\Posts\\' . str_replace('.php', '', $file);
-            new $class();
         }
     }
 

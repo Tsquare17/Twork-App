@@ -55,6 +55,46 @@ class MakeCustomPost extends TworkCli
         }
 
         WP_CLI::line('Created custom post ' . $newFile);
+
+        $configFile = TWORK_PATH . '/Config/config.php';
+
+        $config = fopen($configFile, 'rwb');
+        $newConfig = '';
+        $afterMarkLine = false;
+        $afterOpen = 0;
+        while (!feof($config)) {
+            $line = fgets($config);
+
+            if ($afterOpen === 2) {
+                $newConfig .= "use Twork\App\Posts\\{$name};" . PHP_EOL;
+                $afterOpen = false;
+            }
+
+            if ($afterMarkLine) {
+                $newConfig .= $line . "        {$name}::class," . PHP_EOL;
+                $afterMarkLine = false;
+            } else {
+                $newConfig .= $line;
+            }
+
+            if (strpos($line, '<?php') !== false) {
+                $afterOpen = 1;
+            } else {
+                $afterOpen++;
+            }
+            if (strpos($line, "'custom_posts'") !== false) {
+                $afterMarkLine = true;
+            }
+        }
+        fclose($config);
+
+        $writeConfig = file_put_contents(TWORK_PATH . '/Config/config.php', $newConfig);
+
+        if (!$writeConfig) {
+            WP_CLI::line("Failed to write {$name}::class to config");
+            return 0;
+        }
+
         return 0;
     }
 }
