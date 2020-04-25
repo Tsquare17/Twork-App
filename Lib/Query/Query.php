@@ -16,11 +16,6 @@ abstract class Query
     protected $query;
 
     /**
-     * @var array
-     */
-    public $posts = [];
-
-    /**
      * Query constructor.
      *
      * @param string     $type
@@ -37,33 +32,16 @@ abstract class Query
     }
 
     /**
-     * Query posts and set fields.
+     * Get posts.
      */
-    public function queryPosts(): void
+    public function get(): ?\Generator
     {
         if ($this->query->have_posts()) {
             while ($this->query->have_posts()) {
                 $this->query->the_post();
-                $this->set();
+                yield;
             }
         }
         wp_reset_postdata();
-    }
-
-    /**
-     * Specify post property values.
-     */
-    abstract public function set();
-
-    /**
-     * Get posts.
-     *
-     * @return array
-     */
-    public function get(): array
-    {
-        $this->queryPosts();
-
-        return $this->posts;
     }
 }

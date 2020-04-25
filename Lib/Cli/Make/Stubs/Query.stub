@@ -17,16 +17,4 @@ class $:$ extends Query
     {
         parent::__construct('$:-:$');
     }
-
-    /**
-     * Set post property values.
-     */
-    public function set() {
-        $post = new Post();
-
-        $post->id    = get_the_ID();
-        $post->title = get_the_title();
-
-        $this->posts[] = $post;
-    }
 }

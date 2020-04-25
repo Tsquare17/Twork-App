@@ -27,7 +27,7 @@ class FrontPageController extends Controller
 
         return [
             'title' => 'T-Work',
-            'customPosts' => $customPost->get(),
+            'customPosts' => $customPost,
         ];
     }
 

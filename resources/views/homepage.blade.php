@@ -11,8 +11,8 @@
 
     <div class="custom-posts">
         <h2>Custom Posts</h2>
-        @forelse($customPosts as $post)
-            <h4>{{ $post->title }}</h4>
+        @forelse($customPosts->get() as $post)
+            <h4>{{ the_title() }}</h4>
         @empty
             No Custom Posts
         @endforelse
