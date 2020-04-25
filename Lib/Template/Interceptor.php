@@ -11,9 +11,9 @@ use Twork\Controller;
 class Interceptor
 {
     /**
-     * @var string Name of the template.
+     * @var array Template controller map.
      */
-    protected $template;
+    protected $templates;
 
     /**
      * @var string Controller to use.
@@ -48,13 +48,11 @@ class Interceptor
     /**
      * Interceptor constructor.
      *
-     * @param $template
-     * @param $controller
+     * @param $templates
      */
-    public function __construct($template, $controller)
+    public function __construct($templates)
     {
-        $this->template      = $template;
-        $this->controller    = $controller;
+        $this->templates      = $templates;
 
         add_filter('template_include', [$this, 'templateInterceptor']);
     }
@@ -68,12 +66,13 @@ class Interceptor
      */
     public function templateInterceptor($template)
     {
-        if ($template === TWORK_PATH . '/' . $this->template) {
-            $this->runController();
-            return null;
-        }
+        $array         = explode('/', $template);
+        $templateFile  = end($array);
+        $tworkTemplate = str_replace('.php', '', $templateFile);
 
-        return $template;
+        $this->controller = $this->templates[$tworkTemplate] ?? null;
+
+        return isset($this->templates[$tworkTemplate]) ? $this->runController() : $template;
     }
 
     /**

@@ -14,7 +14,7 @@ class Theme
     /**
      * Theme constructor.
      *
-     * Initialize Theme's Custom Posts and Templates.
+     * Initialize Theme.
      */
     public function __construct()
     {
@@ -28,24 +28,7 @@ class Theme
             new $dashboardMenu();
         }
 
-        foreach ($config['templates'] as $template => $controller) {
-            $this->overrideTemplate($template, $controller);
-        }
-    }
-
-    /**
-     * Override WordPress template includes.
-     *
-     * @param $template
-     * @param $controller
-     */
-    public function overrideTemplate($template, $controller): void
-    {
-        if (strpos(strrev($template), 'php.') !== 0) {
-            $template .= '.php';
-        }
-
-        new Interceptor($template, $controller);
+        new Interceptor($config['templates']);
     }
 
     /**
