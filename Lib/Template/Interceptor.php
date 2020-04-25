@@ -48,7 +48,7 @@ class Interceptor
     /**
      * Interceptor constructor.
      *
-     * @param $templates
+     * @param array $templates
      */
     public function __construct($templates)
     {
@@ -60,11 +60,11 @@ class Interceptor
     /**
      * template_include filter.
      *
-     * @param $template
+     * @param string $template
      *
-     * @return mixed
+     * @return string
      */
-    public function templateInterceptor($template)
+    public function templateInterceptor($template): string
     {
         $array         = explode('/', $template);
         $templateFile  = end($array);
@@ -72,7 +72,11 @@ class Interceptor
 
         $this->controller = $this->templates[$tworkTemplate] ?? null;
 
-        return isset($this->templates[$tworkTemplate]) ? $this->runController() : $template;
+        if (isset($this->templates[$tworkTemplate])) {
+            $this->runController();
+        }
+
+        return $template;
     }
 
     /**
