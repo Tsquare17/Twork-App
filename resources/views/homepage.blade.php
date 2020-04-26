@@ -16,6 +16,7 @@
         @empty
             No Custom Posts
         @endforelse
+        {!! $customPosts->pagination() !!}
     </div>
 </main>
 @wpSidebar
