@@ -43,11 +43,13 @@ abstract class MenuPage
      */
     public function __construct()
     {
-        $this->register();
+        add_action('admin_menu', [$this, 'register']);
+	    add_action('admin_enqueue_scripts', [$this, 'scripts']);
+	    add_action('admin_init', [$this, 'actions']);
     }
 
     /**
-     * Register the menu item.
+     * Register the menu page.
      */
     public function register(): void
     {
@@ -60,8 +62,6 @@ abstract class MenuPage
             $this->icon,
             $this->position
         );
-        add_action('admin_enqueue_scripts', [$this, 'scripts']);
-        add_action('admin_init', [$this, 'actions']);
     }
 
     /**
