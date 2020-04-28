@@ -55,7 +55,6 @@ abstract class CustomPost
      */
     public function __construct()
     {
-        $this->define();
         $this->registerCustomPost();
     }
 
@@ -92,11 +91,4 @@ abstract class CustomPost
     {
         return $this->singularName ?? Strings::singular($this->name);
     }
-
-    /**
-     * Define the post type properties.
-     *
-     * @return void
-     */
-    abstract public function define();
 }

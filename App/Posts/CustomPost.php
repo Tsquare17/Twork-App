@@ -10,14 +10,6 @@ use Twork\Admin\Posts\CustomPost as AbstractCustomPost;
  */
 class CustomPost extends AbstractCustomPost
 {
-    /**
-     * Define the post type properties.
-     *
-     * @return void
-     */
-    public function define()
-    {
-        $this->postType = 'custom-post';
-        $this->name = 'Custom Posts';
-    }
+	protected $postType = 'custom-post';
+	protected $name = 'Custom Posts';
 }

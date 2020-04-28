@@ -10,14 +10,6 @@ use Twork\Admin\Posts\CustomPost;
  */
 class $:$ extends CustomPost
 {
-    /**
-     * Define the post type properties.
-     *
-     * @return void
-     */
-    public function define()
-    {
-        $this->postType = '$:-:$';
-        $this->name = '$: :$';
-    }
+    $this->postType = '$:-:$';
+    $this->name = '$: :$';
 }
