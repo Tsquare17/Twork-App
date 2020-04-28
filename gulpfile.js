@@ -23,7 +23,7 @@ gulp.task('js', function() {
         .pipe(gulp.dest('resources/assets/js/dist'))
 });
 
-gulp.task('serve', function() {
+gulp.task('serve', () => {
     browserSync({
         host: 'localhost',
         port: 3000,
@@ -31,9 +31,9 @@ gulp.task('serve', function() {
         injectChanges: true,
     });
 
-    gulp.watch('./resources/assets/css/src/**/*.scss', ['sass']);
-    gulp.watch('./resources/assets/js/src/**/*.js', ['js']).on('change', reload);
+    gulp.watch('./resources/assets/css/src/**/*.scss', gulp.series('sass'));
+    gulp.watch('./resources/assets/js/src/**/*.js', gulp.series('js')).on('change', reload);
     gulp.watch(['./**/*.php']).on('change', reload);
 });
 
-gulp.task('default', ['sass', 'js', 'serve']);
+gulp.task('default', gulp.series('sass', 'js', 'serve'));
