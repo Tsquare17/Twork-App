@@ -44,8 +44,8 @@ abstract class MenuPage
     public function __construct()
     {
         add_action('admin_menu', [$this, 'register']);
-	    add_action('admin_enqueue_scripts', [$this, 'scripts']);
-	    add_action('admin_init', [$this, 'actions']);
+        add_action('admin_enqueue_scripts', [$this, 'scripts']);
+        add_action('admin_init', [$this, 'actions']);
     }
 
     /**

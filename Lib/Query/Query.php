@@ -96,15 +96,15 @@ abstract class Query
         }
     }
 
-	/**
-	 * Get pagination links.
-	 *
-	 * @param int|null $total
-	 * @param string|null $previousText
-	 * @param string|null $nextText
-	 *
-	 * @return array|string|void
-	 */
+    /**
+     * Get pagination links.
+     *
+     * @param int|null $total
+     * @param string|null $previousText
+     * @param string|null $nextText
+     *
+     * @return array|string|void
+     */
     public function pagination(int $total = null, string $previousText = null, string $nextText = null)
     {
         $args = [

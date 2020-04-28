@@ -10,6 +10,6 @@ use Twork\Admin\Posts\CustomPost as AbstractCustomPost;
  */
 class CustomPost extends AbstractCustomPost
 {
-	protected $postType = 'custom-post';
-	protected $name = 'Custom Posts';
+    protected $postType = 'custom-post';
+    protected $name = 'Custom Posts';
 }
