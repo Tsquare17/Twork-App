@@ -17,6 +17,11 @@ abstract class Query
     protected $query;
 
     /**
+     * @var array WP_Query arguments.
+     */
+    protected $args;
+
+    /**
      * @var string Post type.
      */
     protected $postType;
@@ -36,47 +41,40 @@ abstract class Query
     {
         $this->postType = $type;
 
-        $args = $args ?? $this->queryArgs();
-
-        $this->query = new WP_Query($args);
+        if (!$args) {
+            $this->collectQueryArgs();
+        } else {
+            $this->args = $args;
+        }
     }
 
     /**
      * Build an array of query args.
-     *
-     * @return array
      */
-    public function queryArgs(): array
+    public function collectQueryArgs(): void
     {
-        $args = [
+        $this->args = [
             'post_type' => $this->postType,
             'paged'     => get_query_var('paged') ? absint(get_query_var('paged')) : 1,
         ];
 
-        $args = $this->addArg($args, 'posts_per_page', $this->postsPerPage);
-
-        return $args;
+        $this->addArg('posts_per_page', $this->postsPerPage);
     }
 
     /**
      * Add an argument to the query args, if a value exists for it.
      *
-     * @param array $args
      * @param string $key
      * @param string|array $value
      * @param null|string $parent
-     *
-     * @return array
      */
-    public function addArg($args, $key, $value, $parent = null): array
+    public function addArg($key, $value, $parent = null): void
     {
         if ($value && !$parent) {
-            $args[$key] = $value;
+            $this->args[$key] = $value;
         } elseif ($value && $parent) {
-            $args[$parent][$key] = $value;
+            $this->args[$parent][$key] = $value;
         }
-
-        return $args;
     }
 
     /**
@@ -86,6 +84,8 @@ abstract class Query
      */
     public function get(): ?Generator
     {
+        $this->query = new WP_Query($this->args);
+
         if ($this->query->have_posts()) {
             while ($this->query->have_posts()) {
                 $this->query->the_post();
@@ -120,5 +120,19 @@ abstract class Query
         }
 
         return paginate_links($args);
+    }
+
+    /**
+     * Set the category of posts to query.
+     *
+     * @param $category
+     */
+    public function category($category): void
+    {
+        if (is_numeric($category)) {
+            $this->args['cat'] = $category;
+        } else {
+            $this->args['category_name'] = $category;
+        }
     }
 }
