@@ -64,17 +64,21 @@ abstract class Query
     /**
      * Add an argument to the query args, if a value exists for it.
      *
-     * @param string $key
+     * @param string       $key
      * @param string|array $value
-     * @param null|string $parent
+     * @param null|string  $parent
+     *
+     * @return Query
      */
-    public function addArg($key, $value, $parent = null): void
+    public function addArg($key, $value, $parent = null): Query
     {
         if ($value && !$parent) {
             $this->args[$key] = $value;
         } elseif ($value && $parent) {
             $this->args[$parent][$key] = $value;
         }
+
+        return $this;
     }
 
     /**
@@ -126,13 +130,31 @@ abstract class Query
      * Set the category of posts to query.
      *
      * @param $category
+     *
+     * @return Query
      */
-    public function category($category): void
+    public function category($category): Query
     {
         if (is_numeric($category)) {
-            $this->args['cat'] = $category;
+            $this->addArg('cat', $category);
         } else {
-            $this->args['category_name'] = $category;
+            $this->addArg('category_name', $category);
         }
+
+        return $this;
+    }
+
+    /**
+     * Set a search term.
+     *
+     * @param $search
+     *
+     * @return Query
+     */
+    public function search($search): Query
+    {
+        $this->addArg('s', $search);
+
+        return $this;
     }
 }
