@@ -62,7 +62,7 @@ abstract class Query
     }
 
     /**
-     * Add an argument to the query args, if a value exists for it.
+     * Add to the query args.
      *
      * @param string       $key
      * @param string|array $value
@@ -154,6 +154,24 @@ abstract class Query
     public function search($search): Query
     {
         $this->addArg('s', $search);
+
+        return $this;
+    }
+
+    /**
+     * Add a meta query.
+     *
+     * @param string|array $args
+     *
+     * @return Query
+     */
+    public function metaQuery($args): Query
+    {
+        if (is_array($args)) {
+            $this->args['meta_query'][] = $args;
+        } else {
+            $this->args['meta_query'] = $args;
+        }
 
         return $this;
     }
