@@ -26,7 +26,7 @@ class FrontPageController extends Controller
         $customPost = new CustomPost();
 
         return [
-            'title' => 'T-Work',
+            'title' => 'Twork',
             'customPosts' => $customPost,
         ];
     }
