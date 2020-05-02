@@ -175,4 +175,24 @@ abstract class Query
 
         return $this;
     }
+
+    /**
+     * Query for author(s).
+     *
+     * @param $args
+     *
+     * @return Query
+     */
+    public function author($args): Query
+    {
+        if (is_string($args)) {
+            $this->addArg('author_name', $args);
+        } elseif (is_int($args)) {
+            $this->addArg('author', $args);
+        } else {
+            $this->addArg('author', implode(',', $args));
+        }
+
+        return $this;
+    }
 }
