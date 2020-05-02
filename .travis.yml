@@ -51,6 +51,7 @@ install:
   - npm install
   - cd ..
   - mv Twork-App twork
+  - cd twork
 
 script:
   - composer test
