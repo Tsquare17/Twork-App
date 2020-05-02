@@ -195,4 +195,18 @@ abstract class Query
 
         return $this;
     }
+
+    /**
+     * Get the number of posts.
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        if (!$this->query) {
+            $this->query = new WP_Query($this->args);
+        }
+
+        return $this->query->found_posts;
+    }
 }
