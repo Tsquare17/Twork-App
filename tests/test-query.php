@@ -52,4 +52,26 @@ class QueryTest extends WP_UnitTestCase
 
         $this->assertSame(2, $query->count());
     }
+
+    /** @test */
+    public function can_query_by_category(): void
+    {
+        $cat = $this->factory->category->create();
+        $otherCat = $this->factory->category->create();
+
+        $this->factory->post->create_many(2, [
+            'post_category' => [$cat],
+            'post_type'     => 'custom-post',
+        ]);
+
+        $this->factory->post->create_many(4, [
+            'post_category' => [$otherCat],
+            'post_type'     => 'custom-post',
+        ]);
+
+        $query = new CustomPost();
+        $query->category($cat);
+
+        $this->assertSame(2, $query->count());
+    }
 }

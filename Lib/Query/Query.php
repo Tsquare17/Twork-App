@@ -49,6 +49,18 @@ abstract class Query
     }
 
     /**
+     * Execute the query.
+     *
+     * @return Query
+     */
+    public function execute(): Query
+    {
+        $this->query = $this->query ?: new WP_Query($this->args);
+
+        return $this;
+    }
+
+    /**
      * Build an array of query args.
      */
     public function collectQueryArgs(): void
@@ -88,7 +100,7 @@ abstract class Query
      */
     public function get(): ?Generator
     {
-        $this->query = new WP_Query($this->args);
+        $this->query = $this->query ?: new WP_Query($this->args);
 
         if ($this->query->have_posts()) {
             while ($this->query->have_posts()) {
@@ -203,9 +215,7 @@ abstract class Query
      */
     public function count(): int
     {
-        if (!$this->query) {
-            $this->query = new WP_Query($this->args);
-        }
+        $this->query = $this->query ?: new WP_Query($this->args);
 
         return $this->query->found_posts;
     }

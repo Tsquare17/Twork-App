@@ -54,14 +54,4 @@ class ThemeFunctionalTest extends WP_UnitTestCase
     {
         $this->assertTrue(post_type_exists('custom-post'));
     }
-
-    /** @test */
-    public function query_returns_results(): void
-    {
-        $this->factory->post->create_many(3, ['post_type' => 'custom-post']);
-
-        $query = new CustomPost();
-
-        $this->assertSame(3, $query->count());
-    }
 }
