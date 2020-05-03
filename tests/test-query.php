@@ -80,7 +80,7 @@ class QueryTest extends WP_UnitTestCase
     {
         $searchTerm = '12test20342';
 
-        $post = $this->factory->post->create([
+        $this->factory->post->create([
             'post_content' => $searchTerm,
             'post_type'     => 'custom-post',
         ]);
