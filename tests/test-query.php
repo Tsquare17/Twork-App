@@ -1,0 +1,55 @@
+<?php
+
+namespace Twork\Tests;
+
+use WP_UnitTestCase;
+use Twork\App\Queries\CustomPost;
+
+/**
+ * Class QueryTest
+ *
+ * Query test case.
+ *
+ * @package Twork
+ */
+class QueryTest extends WP_UnitTestCase
+{
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        switch_theme('twork');
+    }
+
+    /** @test */
+    public function query_returns_results(): void
+    {
+        $this->factory->post->create_many(3, ['post_type' => 'custom-post']);
+
+        $query = new CustomPost();
+
+        $this->assertSame(3, $query->count());
+    }
+
+    /** @test */
+    public function can_query_authors_posts(): void
+    {
+        $user = $this->factory->user->create();
+        $otherUser = $this->factory->user->create();
+
+        $this->factory->post->create_many(2, [
+            'post_author' => $user,
+            'post_type'   => 'custom-post',
+        ]);
+
+        $this->factory->post->create_many(4, [
+            'post_author' => $otherUser,
+            'post_type'   => 'custom-post',
+        ]);
+
+        $query = new CustomPost();
+        $query->author($user);
+
+        $this->assertSame(2, $query->count());
+    }
+}
