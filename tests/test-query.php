@@ -74,4 +74,24 @@ class QueryTest extends WP_UnitTestCase
 
         $this->assertSame(2, $query->count());
     }
+
+    /** @test */
+    public function can_query_posts_by_search_term(): void
+    {
+        $searchTerm = '12test20342';
+
+        $post = $this->factory->post->create([
+            'post_content' => $searchTerm,
+            'post_type'     => 'custom-post',
+        ]);
+
+        $this->factory->post->create_many(4, [
+            'post_type'  => 'custom-post',
+        ]);
+
+        $query = new CustomPost();
+        $query->search($searchTerm);
+
+        $this->assertSame(1, $query->count());
+    }
 }
