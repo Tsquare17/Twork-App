@@ -6,10 +6,10 @@ use Twork\Admin\Dashboard\MenuPage;
 
 class Example extends MenuPage
 {
-    /**
-     * @var string The title of the menu in the dashboard sidebar.
-     */
-    protected $menuTitle = 'Example';
+    public function setTitle()
+    {
+        return 'Example';
+    }
 
     /**
      * Display for the menu item page.

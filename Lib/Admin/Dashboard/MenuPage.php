@@ -43,10 +43,20 @@ abstract class MenuPage
      */
     public function __construct()
     {
+        $this->menuTitle = $this->setTitle();
+        $this->menuSlug = $this->menuSlug ?? str_replace(' ', '-', strtolower($this->menuTitle));
+
         add_action('admin_menu', [$this, 'register']);
         add_action('admin_enqueue_scripts', [$this, 'scripts']);
         add_action('admin_init', [$this, 'actions']);
     }
+
+    /**
+     * Return the title of the menu.
+     *
+     * @return string
+     */
+    abstract public function setTitle();
 
     /**
      * Register the menu page.
@@ -57,7 +67,7 @@ abstract class MenuPage
             $this->pageTitle ?: $this->menuTitle,
             $this->menuTitle,
             $this->capability,
-            $this->menuSlug ?: str_replace(' ', '-', strtolower($this->menuTitle)),
+            $this->menuSlug,
             [$this, 'view'],
             $this->icon,
             $this->position
