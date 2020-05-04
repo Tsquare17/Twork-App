@@ -15,7 +15,7 @@ class DebugMail
         $phpmailer->Host = '127.0.0.1';
         $phpmailer->SMTPAuth = true;
         $phpmailer->Port = 2525;
-        $phpmailer->Username = 'Mailbox-Name';
+        $phpmailer->Username = 'Twork';
         $phpmailer->Password = '';
     }
 }
