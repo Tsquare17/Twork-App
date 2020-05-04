@@ -10,7 +10,6 @@ include 'Lib/Functions/init.php';
 
 new Setup();
 
-if (defined('WP_DEBUG') && true === WP_DEBUG)
-{
+if (defined('WP_DEBUG') && true === WP_DEBUG) {
     new DebugMail();
 }
