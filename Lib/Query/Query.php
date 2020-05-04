@@ -22,6 +22,11 @@ abstract class Query
     protected $args;
 
     /**
+     * @var array The original WP_Query arguments.
+     */
+    protected $originalArgs;
+
+    /**
      * @var string Post type.
      */
     protected $postType;
@@ -46,6 +51,8 @@ abstract class Query
         } else {
             $this->args = $args;
         }
+
+        $this->originalArgs = $this->args;
     }
 
     /**
@@ -94,6 +101,18 @@ abstract class Query
     }
 
     /**
+     * Add raw query args.
+     *
+     * @param $args
+     *
+     * @return Query
+     */
+    public function addRawArgs($args): Query
+    {
+        $this->args[] = $args;
+    }
+
+    /**
      * Get posts.
      *
      * @return Generator|null
@@ -110,6 +129,20 @@ abstract class Query
 
             wp_reset_postdata();
         }
+    }
+
+    /**
+     * Reset the query.
+     *
+     * @return Query
+     */
+    public function reset(): Query
+    {
+        $this->args = $this->originalArgs;
+
+        $this->query = null;
+
+        return $this;
     }
 
     /**
@@ -218,5 +251,17 @@ abstract class Query
         $this->query = $this->query ?: new WP_Query($this->args);
 
         return $this->query->found_posts;
+    }
+
+    /**
+     * Get the number of pages of posts.
+     *
+     * @return int
+     */
+    public function pages(): int
+    {
+        $this->query = $this->query ?: new WP_Query($this->args);
+
+        return $this->query->max_num_pages;
     }
 }

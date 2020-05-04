@@ -94,4 +94,23 @@ class QueryTest extends WP_UnitTestCase
 
         $this->assertSame(1, $query->count());
     }
+
+    /** @test */
+    public function can_reset_query_args(): void
+    {
+        $this->factory->post->create_many(9, [
+            'post_type' => 'custom-post',
+        ]);
+
+        $query = new CustomPost();
+
+        $originalNumberOfPages = $query->pages();
+
+        $this->assertEquals(1, $originalNumberOfPages);
+
+        $query->reset();
+        $query->addArg('posts_per_page', 3);
+
+        $this->assertNotSame($originalNumberOfPages, $query->pages());
+    }
 }
