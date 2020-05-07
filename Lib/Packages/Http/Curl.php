@@ -8,7 +8,6 @@ namespace Twork\Packages\Http;
  */
 class Curl
 {
-
     /**
      * @var false|resource The cURL handle.
      */
@@ -29,12 +28,11 @@ class Curl
     public function __construct($url, $headers = [], $verifySsl = true)
     {
         $this->url = $url;
+        $this->ch  = curl_init();
 
-        $this->ch = curl_init();
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->ch, CURLOPT_URL, $url);
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers);
-
         curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, $verifySsl);
     }
 
@@ -50,7 +48,7 @@ class Curl
     }
 
     /**
-     * Get the requested resource.
+     * Send a GET request.
      *
      * @param array $args
      *
@@ -59,7 +57,27 @@ class Curl
     public function get($args = [])
     {
         $query = http_build_query($args, '', '&');
+
         curl_setopt($this->ch, CURLOPT_URL, $this->url . '?' . $query);
+
+        $response = curl_exec($this->ch);
+
+        curl_close($this->ch);
+
+        return $response;
+    }
+
+    /**
+     * Send a POST request.
+     *
+     * @param array $args
+     *
+     * @return bool|string
+     */
+    public function post($args = [])
+    {
+        curl_setopt($this->ch, CURLOPT_POST, true);
+        curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($args));
 
         $response = curl_exec($this->ch);
 
