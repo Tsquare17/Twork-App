@@ -60,11 +60,7 @@ class Curl
 
         curl_setopt($this->ch, CURLOPT_URL, $this->url . '?' . $query);
 
-        $response = curl_exec($this->ch);
-
-        curl_close($this->ch);
-
-        return $response;
+        return $this->request();
     }
 
     /**
@@ -79,6 +75,58 @@ class Curl
         curl_setopt($this->ch, CURLOPT_POST, true);
         curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($args));
 
+        return $this->request();
+    }
+
+    /**
+     * Send a PUT request.
+     *
+     * @param $args
+     *
+     * @return bool|string
+     */
+    public function put($args)
+    {
+        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($args));
+
+        return $this->request();
+    }
+
+    /**
+     * Send a PATCH request.
+     *
+     * @param $args
+     *
+     * @return bool|string
+     */
+    public function patch($args)
+    {
+        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($args));
+
+        return $this->request();
+    }
+
+    /**
+     * Send a DELETE request.
+     *
+     * @return bool|string
+     */
+    public function delete()
+    {
+        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+
+        return $this->request();
+    }
+
+    /**
+     * Execute the cURL request.
+     *
+     * @return bool|string
+     */
+    protected function request()
+    {
         $response = curl_exec($this->ch);
 
         curl_close($this->ch);
