@@ -51,6 +51,9 @@ install:
   - mv Twork-App twork
   - cd twork
 
+env:
+  - SMTP=false
+
 script:
   - composer test
   - composer sniff

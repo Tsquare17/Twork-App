@@ -48,7 +48,7 @@ class Setup
         $config = Dotenv::createImmutable(TWORK_PATH);
         $config->load();
 
-        if (getenv('SMTP')) {
+        if (getenv('SMTP') === 'true') {
             add_filter('phpmailer_init', [$this, 'useSmtp']);
         }
     }
