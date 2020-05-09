@@ -45,8 +45,10 @@ class Setup
      */
     public function getEnv(): void
     {
-        $config = Dotenv::createImmutable(TWORK_PATH);
-        $config->load();
+        if (file_exists(TWORK_PATH . '/.env')) {
+            $config = Dotenv::createImmutable(TWORK_PATH);
+            $config->load();
+        }
 
         if (getenv('SMTP') === 'true') {
             add_filter('phpmailer_init', [$this, 'useSmtp']);
