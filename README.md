@@ -1,4 +1,4 @@
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/twork/app.svg?style=flat-square)](https://packagist.org/packages/twork/app)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/twork/app.svg)](https://packagist.org/packages/twork/app)
 [![Build Status](https://travis-ci.org/Tsquare17/Twork-App.svg?branch=master)](https://travis-ci.org/Tsquare17/Twork-App)
 
 # Twork - WordPress Theme Framework.
