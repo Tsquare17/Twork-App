@@ -2,6 +2,7 @@
 
 namespace Twork\Packages\Mail;
 
+use Twork\Theme;
 use WP_Error;
 
 /**
@@ -211,6 +212,21 @@ class Mail
     public function body(string $body): Mail
     {
         $this->body = $body;
+
+        return $this;
+    }
+
+    /**
+     * Send mail body using a template.
+     *
+     * @param string $path
+     * @param array  $vars
+     *
+     * @return $this
+     */
+    public function template(string $path, array $vars = []): Mail
+    {
+        $this->body = Theme::getBlade()->render('emails.' . $path, $vars);
 
         return $this;
     }
