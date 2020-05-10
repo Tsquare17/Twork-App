@@ -46,6 +46,11 @@ abstract class CustomPost
     protected $menuIcon = null;
 
     /**
+     * @var string[] Taxonomies available for the post type.
+     */
+    protected $taxonomies = ['category'];
+
+    /**
      * @var null A callback function for setting up meta boxes.
      */
     protected $registerMetaBoxCallback = null;
@@ -73,7 +78,7 @@ abstract class CustomPost
             'description' => $this->description,
             'menu_position' => $this->menuPosition,
             'menu_icon' => $this->menuIcon,
-            'taxonomies' => ['category'],
+            'taxonomies' => $this->taxonomies,
             'register_meta_box_cb' => $this->registerMetaBoxCallback,
         ];
 

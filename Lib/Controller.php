@@ -2,6 +2,10 @@
 
 namespace Twork;
 
+/**
+ * Class Controller
+ * @package Twork
+ */
 abstract class Controller
 {
     /**
@@ -24,7 +28,7 @@ abstract class Controller
      *
      * @return array
      */
-    public function footerScripts()
+    public static function footerScripts()
     {
         return [];
     }
@@ -34,7 +38,7 @@ abstract class Controller
      *
      * @return array
      */
-    public function headerScripts()
+    public static function headerScripts()
     {
         return [];
     }
@@ -44,7 +48,37 @@ abstract class Controller
      *
      * @return array
      */
-    public function styles()
+    public static function styles()
+    {
+        return [];
+    }
+
+    /**
+     * Scripts to be enqueued with ajax privileges.
+     *
+     * @return array
+     */
+    public static function ajaxScripts()
+    {
+        return [];
+    }
+
+    /**
+     * An array of methods to be allowed access via ajax without being logged in.
+     *
+     * @return array
+     */
+    public static function ajaxMethods()
+    {
+        return [];
+    }
+
+    /**
+     * An array of methods to be allowed access via ajax while logged in.
+     *
+     * @return array
+     */
+    public static function loggedInAjaxMethods()
     {
         return [];
     }
@@ -57,7 +91,7 @@ abstract class Controller
      *
      * @return array
      */
-    protected function script($path, array $dependencies = null): array
+    protected static function script($path, array $dependencies = null): array
     {
         return ['path' => TWORK_JS_URL . $path, 'dependencies' => $dependencies, 'version' => TWORK_VERSION];
     }
@@ -70,7 +104,7 @@ abstract class Controller
      *
      * @return array
      */
-    protected function style($path, array $dependencies = null): array
+    protected static function style($path, array $dependencies = null): array
     {
         return ['path' => TWORK_CSS_URL . $path, 'dependencies' => $dependencies, 'version' => TWORK_VERSION];
     }

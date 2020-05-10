@@ -26,6 +26,11 @@ class Interceptor
     protected $scripts;
 
     /**
+     * @var array Scripts to be enqueued with ajax privileges.
+     */
+    protected $ajaxScripts;
+
+    /**
      * @var array Styles ready to be enqueued.
      */
     protected $styles;
@@ -39,6 +44,11 @@ class Interceptor
      * @var array Scripts from the controller to be enqueued in the header.
      */
     protected $controllerHeaderScripts;
+
+    /**
+     * @var array Scripts from the controller to be enqueued with ajax privileges.
+     */
+    protected $controllerAjaxScripts;
 
     /**
      * @var array Styles from the controller.
@@ -89,12 +99,14 @@ class Interceptor
          */
         $controller = new $this->controller();
 
-        $this->controllerFooterScripts = $controller->footerScripts();
-        $this->controllerHeaderScripts = $controller->headerScripts();
-        $this->controllerStyles        = $controller->styles();
+        $this->controllerFooterScripts = $controller::footerScripts();
+        $this->controllerHeaderScripts = $controller::headerScripts();
+        $this->controllerStyles        = $controller::styles();
+        $this->controllerAjaxScripts   = $controller::ajaxScripts();
 
         $this->processScripts();
         $this->processStyles();
+        $this->processAjaxScripts();
 
         add_action('wp_enqueue_scripts', [$this, 'enqueueAssets']);
 
@@ -134,6 +146,21 @@ class Interceptor
     }
 
     /**
+     * Process scripts to be enqueued with ajax privileges.
+     */
+    public function processAjaxScripts(): void
+    {
+        $processedAjaxScripts = [];
+        foreach ($this->controllerAjaxScripts as $handle => $script) {
+            $script['handle']         = $handle;
+            $script['in_footer']      = true;
+            $processedAjaxScripts[] = $script;
+        }
+
+        $this->ajaxScripts = $processedAjaxScripts;
+    }
+
+    /**
      * Process styles to be enqueued.
      */
     public function processStyles(): void
@@ -156,8 +183,36 @@ class Interceptor
      */
     public function enqueueAssets(): void
     {
+        $this->registerAjaxScripts();
         $this->enqueueScripts();
         $this->enqueueStyles();
+    }
+
+    /**
+     * Register ajax scripts.
+     */
+    public function registerAjaxScripts(): void
+    {
+        foreach ($this->ajaxScripts as $script) {
+            wp_register_script(
+                $script['handle'],
+                $script['path'],
+                $script['dependencies'],
+                $script['version'],
+                $script['in_footer']
+            );
+
+            $nonce = strtolower(str_replace('-', '_', $script['handle']));
+            wp_localize_script(
+                $script['handle'],
+                'tworkRequest',
+                [
+                    'ajaxurl' => admin_url('admin-ajax.php'),
+                    'ajaxnonce' => wp_create_nonce($nonce)
+                ]
+            );
+            wp_enqueue_script($script['handle']);
+        }
     }
 
     /**

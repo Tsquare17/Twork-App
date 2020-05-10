@@ -19,7 +19,7 @@ class Example extends MenuPage
         ?>
         <h1>Example</h1>
         <form method="POST" action="">
-            <?= twork_nonce('twork_example') ?>
+            <?= twork_nonce_input('twork_example') ?>
             <input type="text" name="t_example">
             <button type="submit" class="button action">Submit</button>
         </form>
@@ -32,7 +32,7 @@ class Example extends MenuPage
     public function actions()
     {
         if (isset($_POST['t_example'])) {
-            twork_nonce_verify('twork_example');
+            wp_verify_nonce($_POST['twork_example'], 'twork_example');
             // Do some stuff
         }
     }

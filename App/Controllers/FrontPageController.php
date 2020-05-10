@@ -36,10 +36,10 @@ class FrontPageController extends Controller
      *
      * @return array
      */
-    public function footerScripts()
+    public static function footerScripts()
     {
         return [
-            'front-page-script-handle' => $this->script('/test.min.js', ['jquery'])
+            'front-page-script-handle' => self::script('/test.min.js', ['jquery']),
         ];
     }
 
@@ -48,10 +48,45 @@ class FrontPageController extends Controller
      *
      * @return array
      */
-    public function styles()
+    public static function styles()
     {
         return [
-            'front-page-style-handle' => $this->style('/test.min.css')
+            'front-page-style-handle' => self::style('/test.min.css'),
         ];
+    }
+
+    /**
+     * Scripts to be enqueued with ajax privileges.
+     *
+     * @return array
+     */
+    public static function ajaxScripts()
+    {
+        return [
+            'front-page-ajax' => self::script('/ajax.min.js', ['jquery']),
+        ];
+    }
+
+    /**
+     * An array of methods to be allowed access via ajax without being logged in.
+     *
+     * @return array
+     */
+    public static function ajaxMethods()
+    {
+        return [
+            'exampleAjaxMethod',
+        ];
+    }
+
+    public static function exampleAjaxMethod()
+    {
+        if (!wp_verify_nonce($_POST['nonce'], 'front_page_ajax')) {
+            echo 'no';
+            wp_die();
+        }
+
+        echo 'success';
+        wp_die();
     }
 }

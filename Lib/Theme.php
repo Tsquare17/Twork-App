@@ -28,6 +28,16 @@ class Theme
             new $dashboardMenu();
         }
 
+        foreach ($config['templates'] as $template => $controller) {
+            foreach ($controller::ajaxMethods() as $method) {
+                add_action("wp_ajax_nopriv_{$method}", [$controller, $method]);
+                add_action("wp_ajax_{$method}", [$controller, $method]);
+            }
+            foreach ($controller::loggedInAjaxMethods() as $method) {
+                add_action("wp_ajax_{$method}", [$controller, $method]);
+            }
+        }
+
         new Interceptor($config['templates']);
     }
 
