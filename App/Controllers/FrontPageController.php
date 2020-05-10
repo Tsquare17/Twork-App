@@ -4,6 +4,7 @@ namespace Twork\App\Controllers;
 
 use Twork\App\Queries\CustomPost;
 use Twork\Controller;
+use Twork\Packages\Mail\Mail;
 
 /**
  * Class FrontPageController
@@ -29,6 +30,22 @@ class FrontPageController extends Controller
             'title' => 'Twork',
             'customPosts' => $customPost,
         ];
+    }
+
+    /**
+     * An example of sending an email.
+     */
+    public function sendMail()
+    {
+        $mail = new Mail();
+        $mail->to('test@test.com')
+            ->name('Joe')
+            ->from('sender@test.com')
+            ->name('Ted')
+            ->subject('Hey There')
+            ->template('generic-notification')
+            ->html()
+            ->send();
     }
 
     /**
@@ -79,6 +96,9 @@ class FrontPageController extends Controller
         ];
     }
 
+    /**
+     * An example of a method that receives an ajax request.
+     */
     public static function exampleAjaxMethod()
     {
         if (!wp_verify_nonce($_POST['nonce'], 'front_page_ajax')) {

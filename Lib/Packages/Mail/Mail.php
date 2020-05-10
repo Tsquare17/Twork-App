@@ -294,16 +294,6 @@ class Mail
      */
     public function reset(): Mail
     {
-        $this->from             = null;
-        $this->to               = null;
-        $this->subject          = null;
-        $this->headers          = [];
-        $this->body             = null;
-        $this->attachments      = [];
-        $this->contentType      = 'Content-Type: text/plain; charset=UTF-8';
-        $this->groupMessage     = false;
-        $this->error            = null;
-        $this->nextToIndex      = 0;
-        $this->lastCallTypeIsTo = null;
+        return new self();
     }
 }
