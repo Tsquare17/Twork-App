@@ -110,6 +110,8 @@ abstract class Query
     public function addRawArgs($args): Query
     {
         $this->args[] = $args;
+
+        return $this;
     }
 
     /**

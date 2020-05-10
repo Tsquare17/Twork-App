@@ -80,9 +80,9 @@ class Interceptor
         $templateFile  = end($array);
         $tworkTemplate = str_replace('.php', '', $templateFile);
 
-        $this->controller = $this->templates[$tworkTemplate] ?? null;
-
         if (isset($this->templates[$tworkTemplate])) {
+            $this->controller = $this->templates[$tworkTemplate];
+
             $this->runController();
         }
 
