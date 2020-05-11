@@ -31,7 +31,7 @@ gulp.task('serve', () => {
         injectChanges: true,
     });
 
-    gulp.watch('./resources/assets/css/src/**/*.scss', gulp.series('sass'));
+    gulp.watch('./resources/assets/css/src/*.scss', gulp.series('sass'));
     gulp.watch('./resources/assets/js/src/**/*.js', gulp.series('js')).on('change', reload);
     gulp.watch(['./**/*.php']).on('change', reload);
 });
