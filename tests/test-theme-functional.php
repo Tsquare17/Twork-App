@@ -30,14 +30,6 @@ class ThemeFunctionalTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function homepage_loads(): void
-    {
-        $this->go_to('/');
-
-        $this->assertQueryTrue('is_home', 'is_front_page');
-    }
-
-    /** @test */
     public function scripts_load(): void
     {
         $this->assertTrue(wp_script_is('twork-js'));

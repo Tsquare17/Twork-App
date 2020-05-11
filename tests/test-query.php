@@ -50,7 +50,9 @@ class QueryTest extends WP_UnitTestCase
         $query = new CustomPost();
         $query->author($user);
 
-        $this->assertSame(2, $query->count());
+        foreach ($query->get() as $post) {
+            $this->assertSame($user, get_the_author_meta('ID'));
+        }
     }
 
     /** @test */
@@ -72,31 +74,49 @@ class QueryTest extends WP_UnitTestCase
         $query = new CustomPost();
         $query->category($cat);
 
-        $this->assertSame(2, $query->count());
+        foreach ($query->get() as $post) {
+            $this->assertSame($cat, get_the_category()[0]->term_taxonomy_id);
+        }
+
+        $query->reset();
+
+        $query->category($otherCat);
+
+        foreach ($query->get() as $post) {
+            $this->assertSame($otherCat, get_the_category()[0]->term_taxonomy_id);
+        }
     }
 
     /** @test */
     public function can_query_posts_by_search_term(): void
     {
         $searchTerm = '12test20342';
+        $otherSearchTerm = '415948082';
 
         $this->factory->post->create([
             'post_content' => $searchTerm,
-            'post_type'     => 'custom-post',
+            'post_type'    => 'custom-post',
         ]);
 
         $this->factory->post->create_many(4, [
-            'post_type'  => 'custom-post',
+            'post_content' => $otherSearchTerm,
+            'post_type'    => 'custom-post',
         ]);
 
         $query = new CustomPost();
         $query->search($searchTerm);
 
         $this->assertSame(1, $query->count());
+
+        $query->reset();
+
+        $query->search($otherSearchTerm);
+
+        $this->assertSame(4, $query->count());
     }
 
     /** @test */
-    public function can_reset_query_args(): void
+    public function can_set_posts_per_page(): void
     {
         $this->factory->post->create_many(9, [
             'post_type' => 'custom-post',
