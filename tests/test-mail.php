@@ -42,4 +42,24 @@ class MailTest extends WP_UnitTestCase
         $this->assertSame($subject, $mockMailer->get_sent()->subject);
         $this->assertSame($body . "\n", $mockMailer->get_sent()->body);
     }
+
+    /** @test */
+    public function can_send_template(): void
+    {
+        $mockMailer = tests_retrieve_phpmailer_instance();
+
+        $to      = 'test2@test.com';
+        $subject = 'testsubject';
+        $notice  = 'test1234';
+
+        $mail = new Mail();
+        $mail->to($to)
+             ->subject($subject)
+             ->template('generic-notification', [
+                 'notice' => $notice,
+             ])
+             ->send();
+
+        $this->assertSame($notice . "\n", $mockMailer->get_sent()->body);
+    }
 }

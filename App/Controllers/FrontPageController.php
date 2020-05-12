@@ -43,10 +43,12 @@ class FrontPageController extends Controller
             ->from('sender@test.com')
             ->name('Ted')
             ->subject('Hey There')
-            ->template('generic-notification',
-            [
-                'notice' => 'Data to pass in as $notice',
-            ])
+            ->template(
+                'generic-notification',
+                [
+                    'notice' => 'Data to pass in as $notice',
+                ]
+            )
             ->html()
             ->send();
     }
