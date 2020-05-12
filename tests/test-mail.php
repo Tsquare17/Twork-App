@@ -62,4 +62,26 @@ class MailTest extends WP_UnitTestCase
 
         $this->assertSame($notice . "\n", $mockMailer->get_sent()->body);
     }
+
+    /** @test */
+    public function can_send_to_multiple_recipients(): void
+    {
+        $mockMailer = tests_retrieve_phpmailer_instance();
+
+        $to      = 'test1@test.com';
+        $to2     = 'test2@test.com';
+
+        $mail = new Mail();
+        $mail->to($to)
+             ->name('test')
+             ->to($to2)
+             ->name('test2')
+             ->subject('subject')
+             ->body('test')
+             ->groupMessage()
+             ->send();
+
+        $this->assertContains($to, $mockMailer->get_recipient('to', 0, 0)->address);
+        $this->assertContains($to2, $mockMailer->get_recipient('to', 0, 1)->address);
+    }
 }
