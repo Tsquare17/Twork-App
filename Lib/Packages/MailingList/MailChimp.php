@@ -64,4 +64,26 @@ class MailChimp
 
         return $curl->get();
     }
+
+    /**
+     * Get lists.
+     *
+     * @return array
+     */
+    public function getLists()
+    {
+        return json_decode($this->get('lists'));
+    }
+
+    /**
+     * Get list by ID.
+     *
+     * @param $listId
+     *
+     * @return array
+     */
+    public function getList($listId)
+    {
+        return json_decode($this->get("/lists/{$listId}"));
+    }
 }
