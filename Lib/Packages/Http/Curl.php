@@ -41,10 +41,14 @@ class Curl
      *
      * @param $option
      * @param $value
+     *
+     * @return Curl
      */
-    public function setOption($option, $value): void
+    public function setOption($option, $value): Curl
     {
         curl_setopt($this->ch, $option, $value);
+
+        return $this;
     }
 
     /**

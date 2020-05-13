@@ -122,9 +122,7 @@ class Mail
             return $this;
         }
 
-        if ($this->lastCallTypeIsTo) {
-            $this->to[$this->nextToIndex - 1] = "$name <{$this->to[$this->nextToIndex - 1]}>";
-        }
+        $this->to[$this->nextToIndex - 1] = "$name <{$this->to[$this->nextToIndex - 1]}>";
 
         return $this;
     }

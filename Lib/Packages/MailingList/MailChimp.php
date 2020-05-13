@@ -10,7 +10,6 @@ use Twork\Packages\Http\Curl;
  */
 class MailChimp
 {
-
     /**
      * @var string The MailChimp API URL.
      */
