@@ -236,8 +236,16 @@ class MailChimp
      *
      * @return MailChimp
      */
-    public function setContact($company = '', $address1 = '', $address2 = '', $city = '', $state = '', $zip = '', $country = '', $phone = ''): MailChimp
-    {
+    public function setContact(
+        $company = '',
+        $address1 = '',
+        $address2 = '',
+        $city = '',
+        $state = '',
+        $zip = '',
+        $country = '',
+        $phone = ''
+    ): MailChimp {
         $this->contact = [
             'company' => $company,
             'address1' => $address1,
