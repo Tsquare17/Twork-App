@@ -2,7 +2,7 @@
 
 namespace Twork\Packages\MailingList\MailChimp;
 
-use Twork\Exceptions\InvalidPropertyException;
+use Twork\Exceptions\RequiredPropertyException;
 use Twork\Packages\Http\Curl;
 use Twork\Packages\Http\Response;
 
@@ -335,15 +335,15 @@ class MailChimp
      * @param bool $emailTypeOption
      *
      * @return Response
-     * @throws InvalidPropertyException
+     * @throws RequiredPropertyException
      */
     public function createList($listName, $permissionReminder = null, $emailTypeOption = true): Response
     {
         if (!$this->contact) {
-            throw new InvalidPropertyException('The contact property has not been set.');
+            throw new RequiredPropertyException('The contact property has not been set.');
         }
         if (!$this->campaignDefaults) {
-            throw new InvalidPropertyException('The campaignDefaults property has not been set.');
+            throw new RequiredPropertyException('The campaignDefaults property has not been set.');
         }
 
         $this->currentRequestType = 'createList';

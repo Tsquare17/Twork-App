@@ -8,6 +8,6 @@ use Exception;
  * Class InvalidPropertyException
  * @package Twork\Exceptions
  */
-class InvalidPropertyException extends Exception
+class RequiredPropertyException extends Exception
 {
 }
