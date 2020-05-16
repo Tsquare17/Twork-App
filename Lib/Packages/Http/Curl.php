@@ -19,6 +19,16 @@ class Curl
     protected $url;
 
     /**
+     * @var Response The cURL request response.
+     */
+    protected $response;
+
+    /**
+     * @var array Errors.
+     */
+    protected $errors = [];
+
+    /**
      * Curl constructor.
      *
      * @param $url
@@ -56,15 +66,19 @@ class Curl
      *
      * @param array $args
      *
-     * @return bool|string
+     * @return Curl
      */
-    public function get($args = [])
+    public function get($args = []): Curl
     {
         $query = http_build_query($args, '', '&');
 
-        curl_setopt($this->ch, CURLOPT_URL, $this->url . '?' . $query);
+        $url = $query ? $this->url . '?' . $query : $this->url;
 
-        return $this->request();
+        curl_setopt($this->ch, CURLOPT_URL, $url);
+
+        $this->request();
+
+        return $this;
     }
 
     /**
@@ -72,14 +86,16 @@ class Curl
      *
      * @param array $args
      *
-     * @return bool|string
+     * @return Curl
      */
-    public function post($args = [])
+    public function post($args = []): Curl
     {
         curl_setopt($this->ch, CURLOPT_POST, true);
         curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($args));
 
-        return $this->request();
+        $this->request();
+
+        return $this;
     }
 
     /**
@@ -87,14 +103,16 @@ class Curl
      *
      * @param $args
      *
-     * @return bool|string
+     * @return Curl
      */
-    public function put($args)
+    public function put($args): Curl
     {
         curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($args));
 
-        return $this->request();
+        $this->request();
+
+        return $this;
     }
 
     /**
@@ -102,39 +120,93 @@ class Curl
      *
      * @param $args
      *
-     * @return bool|string
+     * @return Curl
      */
-    public function patch($args)
+    public function patch($args): Curl
     {
         curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
         curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($args));
 
-        return $this->request();
+        $this->request();
+
+        return $this;
     }
 
     /**
      * Send a DELETE request.
      *
-     * @return bool|string
+     * @return Curl
      */
-    public function delete()
+    public function delete(): Curl
     {
         curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
 
-        return $this->request();
+        $this->request();
+
+        return $this;
     }
 
     /**
      * Execute the cURL request.
      *
-     * @return bool|string
+     * @return void
      */
-    protected function request()
+    protected function request(): void
     {
-        $response = curl_exec($this->ch);
+        $this->response          = new Response();
+        $this->response->body    = curl_exec($this->ch);
+        $this->response->headers = curl_getinfo($this->ch);
+        $this->response->status  = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
+
+        if (curl_errno($this->ch)) {
+            $errorMessage = curl_error($this->ch);
+            $errorCode    = curl_errno($this->ch);
+
+            $this->errors[] = ['Error code' => $errorCode, 'Error Message' => $errorMessage];
+            $this->response->error = $errorMessage;
+            $this->response->status = $errorCode;
+        }
 
         curl_close($this->ch);
+    }
 
-        return $response;
+    /**
+     * @return Response
+     */
+    public function getResponse(): Response
+    {
+        return $this->response;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBody()
+    {
+        return $this->response->body;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getheaders()
+    {
+        return $this->response->headers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->response->status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getError()
+    {
+        return $this->response->error;
     }
 }
