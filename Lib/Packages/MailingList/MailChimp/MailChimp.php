@@ -147,7 +147,7 @@ class MailChimp
             $this->response->body = json_decode($response->body);
         }
 
-        if (!$error->details && $response->body->detail) {
+        if (!isset($error->details) && isset($response->body->detail)) {
             $error->details = $response->body->detail;
         }
 
@@ -201,26 +201,38 @@ class MailChimp
     {
         $type = $this->currentRequestType;
 
-        foreach ($this->errors['error'] as $error) {
-            if ($error->status === 6) {
-                $error->help[] = 'Is your API key correct?';
-            }
-        }
+        $this->addErrorHelper('error', static function($error) {
+            return $error->status === 6;
+        }, 'Is your API key correct?');
 
-        foreach ($this->errors['403'] as $error) {
-            if ($type === 'lists') {
-                $error->help[] = 'Have you reached the maximum number of lists for your MailChimp account?';
-            }
-        }
+        $this->addErrorHelper('403', static function() use ($type) {
+            return $type === 'lists';
+        }, 'Have you reached the maximum number of lists for your MailChimp account?');
 
-        foreach ($this->errors['404'] as $error) {
-            if ($type === 'list' || $type === 'listMembers') {
-                $error->help[] = 'Is your list_id correct?';
-            }
-        }
+        $this->addErrorHelper('404', static function() use ($type) {
+            return $type === 'list' || $ype === 'listMembers';
+        }, 'Is your list_id correct?');
 
         if (count($this->errors)) {
             $this->response->error = $this->errors;
+        }
+    }
+
+    /**
+     * Add error help text.
+     *
+     * @param          $key
+     * @param callable $condition
+     * @param          $help
+     */
+    protected function addErrorHelper($key, callable $condition, $help): void
+    {
+        if (isset($this->errors[$key])) {
+            foreach ($this->errors[$key] as $error) {
+                if ($condition) {
+                    $error->help[] = $help;
+                }
+            }
         }
     }
 
