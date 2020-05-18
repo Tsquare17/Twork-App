@@ -210,7 +210,7 @@ class MailChimp
         }, 'Have you reached the maximum number of lists for your MailChimp account?');
 
         $this->addErrorHelper('404', static function() use ($type) {
-            return $type === 'list' || $ype === 'listMembers';
+            return $type === 'list' || $type === 'listMembers';
         }, 'Is your list_id correct?');
 
         if (count($this->errors)) {
@@ -221,11 +221,11 @@ class MailChimp
     /**
      * Add error help text.
      *
-     * @param          $key
+     * @param string   $key
      * @param callable $condition
-     * @param          $help
+     * @param string   $help
      */
-    protected function addErrorHelper($key, callable $condition, $help): void
+    protected function addErrorHelper(string $key, callable $condition, string $help): void
     {
         if (isset($this->errors[$key])) {
             foreach ($this->errors[$key] as $error) {
