@@ -201,15 +201,15 @@ class MailChimp
     {
         $type = $this->currentRequestType;
 
-        $this->addErrorHelper('error', static function($error) {
+        $this->addErrorHelper('error', static function ($error) {
             return $error->status === 6;
         }, 'Is your API key correct?');
 
-        $this->addErrorHelper('403', static function() use ($type) {
+        $this->addErrorHelper('403', static function () use ($type) {
             return $type === 'lists';
         }, 'Have you reached the maximum number of lists for your MailChimp account?');
 
-        $this->addErrorHelper('404', static function() use ($type) {
+        $this->addErrorHelper('404', static function () use ($type) {
             return $type === 'list' || $type === 'listMembers';
         }, 'Is your list_id correct?');
 

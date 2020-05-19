@@ -2,6 +2,7 @@
 
 namespace Twork\App\Controllers;
 
+use Twork\App\Forms\ContactForm;
 use Twork\App\Queries\CustomPost;
 use Twork\Controller;
 use Twork\Packages\Mail\Mail;
@@ -26,9 +27,12 @@ class FrontPageController extends Controller
     {
         $customPost = new CustomPost();
 
+        $form = $this->createForm();
+
         return [
             'title' => 'Twork',
             'customPosts' => $customPost,
+            'form' => $form,
         ];
     }
 
@@ -51,6 +55,17 @@ class FrontPageController extends Controller
             )
             ->html()
             ->send();
+    }
+
+    /**
+     * An example form.
+     *
+     * @return ContactForm
+     */
+    public function createForm()
+    {
+        return (new ContactForm())->inputTemplate('forms.defaultTextInput', [ 'name' => 'testing'])
+            ->inputTemplate('forms.defaultTextInput', ['name' => 'test2']);
     }
 
     /**

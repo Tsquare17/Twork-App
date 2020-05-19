@@ -9,6 +9,12 @@
         @endWpPosts
     </div>
 
+    {!! $form->render() !!}
+
+    @if($form->isSubmitted())
+        {{'submitted'}}
+    @endif
+
     <div class="custom-posts">
         <h2>Custom Posts</h2>
         @forelse($customPosts->get() as $post)
