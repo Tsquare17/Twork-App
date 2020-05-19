@@ -64,8 +64,15 @@ class FrontPageController extends Controller
      */
     public function createForm()
     {
-        return (new ContactForm())->inputTemplate('forms.defaultTextInput', [ 'name' => 'testing'])
-            ->inputTemplate('forms.defaultTextInput', ['name' => 'test2']);
+        $form = new ContactForm();
+
+        $form->inputTemplate('forms.defaultTextInput', [
+            'name' => 'testing',
+        ])->inputTemplate('forms.defaultTextInput', [
+            'name' => 'test2',
+        ]);
+
+        return $form;
     }
 
     /**
