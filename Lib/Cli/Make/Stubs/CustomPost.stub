@@ -10,6 +10,6 @@ use Twork\Admin\Posts\CustomPost;
  */
 class $:$ extends CustomPost
 {
-    $this->postType = '$:-:$';
-    $this->name = '$: :$';
+    protected $postType = '$:-:$';
+    protected $name = '$: :$';
 }
