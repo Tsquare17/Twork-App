@@ -13,6 +13,9 @@
 
     @if($form->isSubmitted())
         {{'submitted'}}
+        @if($form->isValid())
+            {{'valid!'}}
+        @endif
     @endif
 
     <div class="custom-posts">

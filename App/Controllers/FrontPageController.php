@@ -5,6 +5,7 @@ namespace Twork\App\Controllers;
 use Twork\App\Forms\ContactForm;
 use Twork\App\Queries\CustomPost;
 use Twork\Controller;
+use Twork\Forms\ValidationRule;
 use Twork\Packages\Mail\Mail;
 
 /**
@@ -67,10 +68,14 @@ class FrontPageController extends Controller
         $form = new ContactForm();
 
         $form->inputTemplate('forms.defaultTextInput', [
+            'label' => 'email',
             'name' => 'testing',
-        ])->inputTemplate('forms.defaultTextInput', [
+        ], 'testing', true, ValidationRule::EMAIL);
+
+        $form->inputTemplate('forms.defaultTextInput', [
+            'label' => 'name',
             'name' => 'test2',
-        ]);
+        ], 'test2', true);
 
         return $form;
     }
