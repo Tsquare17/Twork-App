@@ -54,6 +54,11 @@ class Form
     protected $submitButton = '<button type="submit">Submit</button>';
 
     /**
+     * @var string The form nonce.
+     */
+    protected $nonce;
+
+    /**
      * Form constructor.
      *
      * @param null $formName
@@ -73,6 +78,8 @@ class Form
         } else {
             $this->formName = 'twork_' . $formName;
         }
+
+        $this->nonce = wp_create_nonce($this->formName);
     }
 
     /**
@@ -106,13 +113,13 @@ class Form
     /**
      * Store submissions in the database.
      *
-     * @param bool $args
+     * @param bool $arg
      *
      * @return $this
      */
-    public function storeSubmissions(bool $args = true): Form
+    public function storeSubmissions(bool $arg = true): Form
     {
-        $this->storeSubmissions = $args;
+        $this->storeSubmissions = $arg;
 
         return $this;
     }
@@ -124,7 +131,7 @@ class Form
      */
     public function isSubmitted(): bool
     {
-        return isset($_POST[$this->formName]);
+        return $this->method === 'POST' ? isset($_POST[$this->formName]) : isset($_GET[$this->formName]);
     }
 
     /**
@@ -134,17 +141,18 @@ class Form
      */
     public function isValid(): bool
     {
+        $vars = $this->method === 'POST' ? $_POST : $_GET;
+
+        if (!wp_verify_nonce($vars[$this->formName], $this->formName)) {
+            return false;
+        }
+
         foreach ($this->fields as $field) {
-            if ($this->method === 'POST' && $field['required'] && !isset($_POST[$field['name']])) {
+            if ($field['required'] && !isset($vars[$field['name']])) {
                 return false;
             }
 
-            if ($this->method === 'GET' && $field['required'] && !isset($_GET[$field['name']])) {
-                return false;
-            }
-
-            $value = $this->method === 'POST' ? $_POST[$field['name']] : $_GET[$field['name']];
-            $valid = $this->isValidInputType($field['rule'], $value);
+            $valid = $this->isValidInputType($field['rule'], $vars[$field['name']]);
 
             if (!$valid) {
                 return false;
@@ -158,8 +166,7 @@ class Form
      * Set an input using a template.
      *
      * @param string $template
-     * @param mixed  ...$args
-     *
+     * @param array  $args
      * @param string $inputName
      * @param bool   $required
      * @param int    $validationRule
@@ -203,7 +210,7 @@ class Form
         $this->formHtml = '<form action="' . $this->action . '" method="' . $this->method . '" class="' . $classes
                           . '">';
 
-        $this->formHtml .= '<input type="hidden" name="' . $this->formName . '" value="1"/>';
+        $this->formHtml .= '<input type="hidden" name="' . $this->formName . '" value="' . $this->nonce . '"/>';
 
         foreach ($this->fields as $field) {
             $this->formHtml .= $field['template'];
