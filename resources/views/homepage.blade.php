@@ -20,7 +20,7 @@
 
     <div class="custom-posts">
         <h2>Custom Posts</h2>
-        @forelse($customPosts->get() as $post)
+        @forelse($customPosts->fetch() as $null)
             <h4>{{ the_title() }}</h4>
         @empty
             No Custom Posts

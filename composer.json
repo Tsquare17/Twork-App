@@ -18,7 +18,8 @@
     "require": {
         "php": "^7.1",
         "jenssegers/blade": "^1.2",
-        "vlucas/phpdotenv": "^4.1"
+        "vlucas/phpdotenv": "^4.1",
+        "twork/query": "1.*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",

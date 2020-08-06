@@ -38,27 +38,6 @@ class FrontPageController extends Controller
     }
 
     /**
-     * An example of sending an email.
-     */
-    public function sendMail()
-    {
-        $mail = new Mail();
-        $mail->to('test@test.com')
-            ->name('Joe')
-            ->from('sender@test.com')
-            ->name('Ted')
-            ->subject('Hey There')
-            ->template(
-                'generic-notification',
-                [
-                    'notice' => 'Data to pass in as $notice',
-                ]
-            )
-            ->html()
-            ->send();
-    }
-
-    /**
      * An example form.
      *
      * @return ContactForm
