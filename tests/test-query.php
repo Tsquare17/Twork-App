@@ -50,7 +50,7 @@ class QueryTest extends WP_UnitTestCase
         $query = new CustomPost();
         $query->author($user);
 
-        foreach ($query->get() as $post) {
+        foreach ($query->fetch() as $null) {
             $this->assertSame($user, get_the_author_meta('ID'));
         }
     }
@@ -74,7 +74,7 @@ class QueryTest extends WP_UnitTestCase
         $query = new CustomPost();
         $query->category($cat);
 
-        foreach ($query->get() as $post) {
+        foreach ($query->fetch() as $null) {
             $this->assertSame($cat, get_the_category()[0]->term_taxonomy_id);
         }
 
@@ -82,7 +82,7 @@ class QueryTest extends WP_UnitTestCase
 
         $query->category($otherCat);
 
-        foreach ($query->get() as $post) {
+        foreach ($query->fetch() as $null) {
             $this->assertSame($otherCat, get_the_category()[0]->term_taxonomy_id);
         }
     }
