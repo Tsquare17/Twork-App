@@ -9,15 +9,6 @@
         @endWpPosts
     </div>
 
-    {!! $form->render() !!}
-
-    @if($form->isSubmitted())
-        {{'submitted'}}
-        @if($form->isValid())
-            {{'valid!'}}
-        @endif
-    @endif
-
     <div class="custom-posts">
         <h2>Custom Posts</h2>
         @forelse($customPosts->fetch() as $null)

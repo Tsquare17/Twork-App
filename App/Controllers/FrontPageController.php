@@ -28,35 +28,10 @@ class FrontPageController extends Controller
     {
         $customPost = new CustomPost();
 
-        $form = $this->createForm();
-
         return [
             'title' => 'Twork',
             'customPosts' => $customPost,
-            'form' => $form,
         ];
-    }
-
-    /**
-     * An example form.
-     *
-     * @return ContactForm
-     */
-    public function createForm()
-    {
-        $form = new ContactForm();
-
-        $form->inputTemplate('forms.defaultTextInput', [
-            'label' => 'email',
-            'name' => 'testing',
-        ], 'testing', true, ValidationRule::EMAIL);
-
-        $form->inputTemplate('forms.defaultTextInput', [
-            'label' => 'name',
-            'name' => 'test2',
-        ], 'test2', true);
-
-        return $form;
     }
 
     /**
