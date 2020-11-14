@@ -17,9 +17,8 @@
     },
     "require": {
         "php": "^7.1",
-        "twork/controller": "dev-master",
+        "twork/controller": "1.*",
         "twork/query": "1.*",
-        "twork/helpers": "dev-master",
         "vlucas/phpdotenv": "^5.2"
     },
     "require-dev": {
