@@ -1,5 +1,7 @@
-<?php
+<?php get_header() ?>
 
-use Twork\Theme;
+<h1>404</h1>
 
-echo Theme::getBlade()->render('wp_template.404');
+<?php __('The page you requested could not be found.') ?>
+
+<?php get_footer() ?>

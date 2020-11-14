@@ -3,7 +3,6 @@
 namespace Twork\Tests;
 
 use WP_UnitTestCase;
-use Twork\App\Queries\CustomPost;
 
 /**
  * Class ThemeFunctionalTest
@@ -39,11 +38,5 @@ class ThemeFunctionalTest extends WP_UnitTestCase
     public function styles_load(): void
     {
         $this->assertTrue(wp_style_is('twork-css'));
-    }
-
-    /** @test */
-    public function custom_post_is_registered(): void
-    {
-        $this->assertTrue(post_type_exists('custom-post'));
     }
 }

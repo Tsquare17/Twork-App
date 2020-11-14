@@ -1,6 +1,4 @@
 .env
-cache/*
-!cache/.gitkeep
 node_modules
 resources/assets/css/dist
 resources/assets/js/dist

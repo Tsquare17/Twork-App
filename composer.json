@@ -11,15 +11,16 @@
     ],
     "autoload": {
         "psr-4": {
-            "Twork\\": "Lib/",
+            "Twork\\Theme\\": "Theme/",
             "Twork\\App\\": "App/"
         }
     },
     "require": {
         "php": "^7.1",
-        "jenssegers/blade": "^1.2",
-        "vlucas/phpdotenv": "^4.1",
-        "twork/query": "1.*"
+        "twork/controller": "dev-master",
+        "twork/query": "1.*",
+        "twork/helpers": "dev-master",
+        "vlucas/phpdotenv": "^5.2"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
@@ -30,5 +31,8 @@
         "sniff": "phpcs -p -s --colors --standard=phpcs.xml",
         "test": "vendor/bin/phpunit --colors=always",
         "check": "composer sniff && composer test"
+    },
+    "archive": {
+        "exclude": ["bin/", "tests/"]
     }
 }

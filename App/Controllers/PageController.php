@@ -2,7 +2,7 @@
 
 namespace Twork\App\Controllers;
 
-use Twork\Controller;
+use Twork\Controller\Controller;
 
 /**
  * Class PageController

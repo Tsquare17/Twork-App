@@ -2,11 +2,8 @@
 
 namespace Twork\App\Controllers;
 
-use Twork\App\Forms\ContactForm;
-use Twork\App\Queries\CustomPost;
-use Twork\Controller;
-use Twork\Forms\ValidationRule;
-use Twork\Packages\Mail\Mail;
+use Twork\App\Queries\CustomPostQuery;
+use Twork\Controller\Controller;
 
 /**
  * Class FrontPageController
@@ -15,18 +12,13 @@ use Twork\Packages\Mail\Mail;
 class FrontPageController extends Controller
 {
     /**
-     * @var string The name of the blade template.
-     */
-    public $template = 'homepage';
-
-    /**
      * Return an array of variables to pass to the template.
      *
      * @return array
      */
     public function data()
     {
-        $customPost = new CustomPost();
+        $customPost = new CustomPostQuery();
 
         return [
             'title' => 'Twork',
@@ -42,7 +34,7 @@ class FrontPageController extends Controller
     public static function footerScripts()
     {
         return [
-            'front-page-script-handle' => self::script('/test.min.js', ['jquery']),
+            'front-page-script-handle' => self::script(TWORK_JS_URL . '/test.min.js', ['jquery'], TWORK_VERSION),
         ];
     }
 
@@ -54,7 +46,7 @@ class FrontPageController extends Controller
     public static function styles()
     {
         return [
-            'front-page-style-handle' => self::style('/test.min.css'),
+            'front-page-style-handle' => self::style(TWORK_CSS_URL . '/test.min.css', TWORK_VERSION),
         ];
     }
 
@@ -66,7 +58,7 @@ class FrontPageController extends Controller
     public static function ajaxScripts()
     {
         return [
-            'front-page-ajax' => self::script('/ajax.min.js', ['jquery']),
+            'front-page-ajax' => self::script(TWORK_JS_URL . '/ajax.min.js', ['jquery']),
         ];
     }
 

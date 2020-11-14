@@ -12,12 +12,3 @@
 ### Installation
 - composer create-project twork/app ThemeName
 - cd ThemeName && npm install
-
-### Make a Controller
-- wp twork make controller ExamplePage
-
-### Make a New Custom Post Type
-- wp twork make post ExamplePosts
-
-### Make a New Query
-- wp twork make query ExamplePosts
