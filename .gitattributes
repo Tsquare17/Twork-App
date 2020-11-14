@@ -1,0 +1,6 @@
+tests/ export-ignore
+bin/ export-ignore export-ignore
+.editorconfig export-ignore
+phpcs.xml export-ignore
+phpunit.xml.dist export-ignore
+README.md export-ignore
