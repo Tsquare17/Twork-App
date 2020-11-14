@@ -25,9 +25,9 @@ gulp.task('js', function() {
 
 gulp.task('serve', () => {
     browserSync({
-        host: 'localhost',
-        port: 3000,
+        host: 'twork.local',
         proxy: 'http://twork.local/',
+        open: 'external',
         injectChanges: true,
     });
 
