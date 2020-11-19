@@ -10,8 +10,10 @@ use Twork\Controller\Controller;
  */
 class IndexController extends Controller
 {
-    /**
-     * @var string The name of the blade template.
-     */
-    public $template = 'index';
+    public function data()
+    {
+        return [
+            'title' => 'Index',
+        ];
+    }
 }

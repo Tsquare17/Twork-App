@@ -18,11 +18,8 @@ class FrontPageController extends Controller
      */
     public function data()
     {
-        $customPost = new CustomPostQuery();
-
         return [
             'title' => 'Twork',
-            'customPosts' => $customPost,
         ];
     }
 
