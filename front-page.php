@@ -7,7 +7,6 @@ global $post;
 
 <main id="content homepage">
     <h1><?= the_title() ?></h1>
-    <?= twork_nonce_input('twork_nonce') ?>
     <div class="posts">
         <h2>Posts</h2>
         <?php if (have_posts()) : ?>
