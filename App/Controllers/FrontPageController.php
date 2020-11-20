@@ -2,7 +2,6 @@
 
 namespace Twork\App\Controllers;
 
-use Twork\App\Queries\CustomPostQuery;
 use Twork\Controller\Controller;
 
 /**
