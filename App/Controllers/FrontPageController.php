@@ -30,7 +30,7 @@ class FrontPageController extends Controller
     public static function footerScripts()
     {
         return [
-            'front-page-script-handle' => self::script(TWORK_JS_URL . '/test.min.js', ['jquery'], TWORK_VERSION),
+            // 'example-script' => self::script(TWORK_JS_URL . '/example.min.js', ['jquery'], TWORK_VERSION),
         ];
     }
 
@@ -41,9 +41,7 @@ class FrontPageController extends Controller
      */
     public static function styles()
     {
-        return [
-            'front-page-style-handle' => self::style(TWORK_CSS_URL . '/test.min.css', TWORK_VERSION),
-        ];
+        return [];
     }
 
     /**
@@ -54,7 +52,7 @@ class FrontPageController extends Controller
     public static function ajaxScripts()
     {
         return [
-            'front-page-ajax' => self::script(TWORK_JS_URL . '/ajax.min.js', ['jquery']),
+            // 'example-ajax' => self::script(TWORK_JS_URL . '/ajax.min.js', ['jquery']),
         ];
     }
 
@@ -66,7 +64,7 @@ class FrontPageController extends Controller
     public static function ajaxMethods()
     {
         return [
-            'exampleAjaxMethod',
+            // 'exampleAjaxMethod',
         ];
     }
 

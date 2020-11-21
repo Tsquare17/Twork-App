@@ -13,11 +13,7 @@
         "psr-4": {
             "Twork\\Theme\\": "Theme/",
             "Twork\\App\\": "App/"
-        },
-        "files": [
-            "Theme/defines.php",
-            "Theme/custom-posts.php"
-        ]
+        }
     },
     "require": {
         "php": "^7.1",

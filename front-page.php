@@ -3,6 +3,8 @@ get_header();
 
 global $post;
 
+$controller = $post->twork;
+
 ?>
 
 <main id="content homepage">
@@ -21,16 +23,6 @@ global $post;
             endwhile;
         endif;
         ?>
-    </div>
-
-    <div class="custom-posts">
-        <h2>Custom Posts</h2>
-
-        <?php foreach ($post->customPosts->fetch() as $null) : ?>
-            <h4><?php the_title() ?></h4>
-        <?php endforeach ?>
-
-        <?php $post->customPosts->pagination() ?>
     </div>
 </main>
 
