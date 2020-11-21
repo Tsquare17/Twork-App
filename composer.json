@@ -17,9 +17,9 @@
     },
     "require": {
         "php": "^7.1",
-        "twork/controller": "1.*",
-        "twork/query": "1.*",
-        "vlucas/phpdotenv": "^5.2"
+        "twork/query": "^1.1",
+        "vlucas/phpdotenv": "^5.2",
+        "twork/controller": "^1.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
@@ -32,6 +32,9 @@
         "check": "composer sniff && composer test"
     },
     "archive": {
-        "exclude": ["bin/", "tests/"]
+        "exclude": [
+            "bin/",
+            "tests/"
+        ]
     }
 }
