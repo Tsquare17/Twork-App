@@ -1,40 +1,40 @@
 {
-    "name": "twork/app",
-    "description": "A WordPress Theme Framework.",
-    "type": "project",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Trevor Thompson",
-            "email": "trevor@trevomail.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Twork\\Theme\\": "Theme/",
-            "Twork\\App\\": "App/"
-        }
-    },
-    "require": {
-        "php": "^7.1",
-        "twork/query": "^1.1",
-        "vlucas/phpdotenv": "^5.2",
-        "twork/controller": "^1.0"
-    },
-    "require-dev": {
-        "roave/security-advisories": "dev-master",
-        "squizlabs/php_codesniffer": "^3.5",
-        "phpunit/phpunit": "7.*"
-    },
-    "scripts": {
-        "sniff": "phpcs -p -s --colors --standard=phpcs.xml",
-        "test": "vendor/bin/phpunit --colors=always",
-        "check": "composer sniff && composer test"
-    },
-    "archive": {
-        "exclude": [
-            "bin/",
-            "tests/"
-        ]
+  "name": "twork/app",
+  "description": "A WordPress Theme Framework.",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Trevor Thompson",
+      "email": "trevor@trevomail.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Twork\\Theme\\": "Theme/",
+      "Twork\\App\\": "App/"
+    }
+  },
+  "require": {
+    "php": "^7.1",
+    "twork/query": "^1.1",
+    "vlucas/phpdotenv": "^5.2",
+    "twork/controller": "^1.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "squizlabs/php_codesniffer": "^3.5",
+    "phpunit/phpunit": "7.*"
+  },
+  "scripts": {
+    "sniff": "phpcs -p -s --colors --standard=phpcs.xml",
+    "test": "vendor/bin/phpunit --colors=always",
+    "check": "composer sniff && composer test"
+  },
+  "archive": {
+    "exclude": [
+      "bin/",
+      "tests/"
+    ]
+  }
 }
