@@ -3,7 +3,7 @@
 use Twork\Theme\Setup\Setup;
 
 include 'vendor/autoload.php';
-include 'Theme/defines.php';
-include 'Theme/custom-posts.php';
+include 'Lib/defines.php';
+include 'Lib/custom-posts.php';
 
 new Setup();

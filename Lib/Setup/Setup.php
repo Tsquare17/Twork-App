@@ -4,6 +4,7 @@ namespace Twork\Theme\Setup;
 
 use Dotenv\Dotenv;
 use Twork\Controller\ControllerDispatcher;
+use Twork\Theme\Error\ErrorListener;
 
 /**
  * Class Setup
@@ -45,12 +46,15 @@ class Setup
      */
     public function getEnv(): void
     {
-        if (file_exists(TWORK_PATH . '/.env')) {
-            $config = Dotenv::createImmutable(TWORK_PATH);
-            $config->load();
-        }
+        $config = Dotenv::createImmutable(TWORK_PATH);
+        $config->load();
 
-        if (getenv('SMTP') === 'true') {
+        if (isset($_ENV['SMTP']) && $_ENV['SMTP'] === 'true') {
+            $config->required('SMTP_HOST');
+            $config->required('SMTP_PORT');
+            $config->required('SMTP_USER');
+            $config->required('SMTP_PASS');
+
             add_filter('phpmailer_init', [$this, 'useSmtp']);
         }
     }
@@ -63,11 +67,12 @@ class Setup
     public function useSmtp($mailer): void
     {
         $mailer->isSMTP();
-        $mailer->Host = getenv('SMTP_HOST');
         $mailer->SMTPAuth = true;
-        $mailer->Port = getenv('SMTP_PORT');
-        $mailer->Username = getenv('SMTP_USER');
-        $mailer->Password = getenv('SMTP_PASS');
+        $mailer->Host = $_ENV['SMTP_HOST'];
+        $mailer->Port = $_ENV['SMTP_PORT'];
+        $mailer->Username = $_ENV['SMTP_USER'];
+        $mailer->Password = $_ENV['SMTP_PASS'];
+        $mailer->SMTPSecure = $_ENV['SMTP_SECURE'] ?? '';
     }
 
     /**

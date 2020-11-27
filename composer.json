@@ -11,15 +11,15 @@
   ],
   "autoload": {
     "psr-4": {
-      "Twork\\Theme\\": "Theme/",
+      "Twork\\Theme\\": "Lib/",
       "Twork\\App\\": "App/"
     }
   },
   "require": {
     "php": "^7.1",
+    "twork/controller": "^1.0",
     "twork/query": "^1.1",
-    "vlucas/phpdotenv": "^5.2",
-    "twork/controller": "^1.0"
+    "vlucas/phpdotenv": "^5.2"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
