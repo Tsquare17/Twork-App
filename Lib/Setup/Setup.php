@@ -17,7 +17,9 @@ class Setup
      */
     public function __construct()
     {
-        $this->getEnv();
+        if (file_exists(TWORK_PATH . '/.env')) {
+            $this->getEnv();
+        }
 
         add_action('wp_enqueue_scripts', [$this, 'enqueueGlobalScripts']);
         add_action('wp_enqueue_scripts', [$this, 'enqueueGlobalStyles']);
