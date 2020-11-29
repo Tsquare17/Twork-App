@@ -1,14 +1,12 @@
 <?php
 get_header();
 
-global $post;
-
-$controller = $post->twork;
+global $twork;
 
 ?>
 
 <main id="content homepage">
-    <h1><?= the_title() ?></h1>
+    <h1><?= $twork->title ?></h1>
     <div class="posts">
         <h2>Posts</h2>
         <?php if (have_posts()) : ?>

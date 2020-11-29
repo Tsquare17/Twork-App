@@ -18,7 +18,7 @@ class FrontPageController extends Controller
     public function data()
     {
         return [
-            'title' => 'Twork',
+            'title' => 'Tworkt',
         ];
     }
 
